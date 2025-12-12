@@ -1,0 +1,48 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx next build:*)",
+      "Bash(npm install:*)",
+      "Bash(poetry add:*)",
+      "Bash(mv:*)",
+      "Bash(npm run lint)",
+      "Bash(poetry run flake8:*)",
+      "Bash(poetry run:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(poetry remove:*)",
+      "Bash(rm:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node:*)",
+      "Bash(find:*)",
+      "Bash(for file in RecoveryPlanQuestionnaire UnlockSection)",
+      "Bash(do echo \"=== Checking $file ===\")",
+      "Bash(grep:*)",
+      "Bash(done)",
+      "Bash(for component in \"CourseHeader\" \"AssessmentSection\" \"FreeLessonSection\" \"PaidLessonsSection\")",
+      "Bash(do echo \"=== $component ===\")",
+      "Bash(npx next lint:*)",
+      
+      "mcp__ide__getDiagnostics",
+      "Read(//c/**)",
+      "Bash(dir:*)",
+      "Bash(git add:*)",
+      "Bash(npm i:*)",
+      "Bash(git commit:*)",
+      "Bash(xargs:*)",
+      "Bash(cat:*)",
+      "Bash(claude mcp:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\c\\Users\\matth\\Engineering\\thebraindump"
+    ]
+  }
+}

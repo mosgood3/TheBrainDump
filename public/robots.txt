@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth/
+
+# Host
+Host: https://thebraindump.com
+
+# Sitemaps
+Sitemap: https://thebraindump.com/sitemap.xml
