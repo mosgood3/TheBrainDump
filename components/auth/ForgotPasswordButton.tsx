@@ -7,7 +7,7 @@ export default function ForgotPasswordButton({ onClick }: ForgotPasswordButtonPr
     <div className="mt-4 text-center">
       <button
         onClick={onClick}
-        className="text-sm text-blue-600 hover:text-blue-500"
+        className="text-sm text-blue-400 hover:text-blue-300"
         type="button"
       >
         Forgot your password?

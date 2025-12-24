@@ -24,7 +24,7 @@ interface NavbarProps {
 export default function Navbar({
   navItems = [
     { label: "Home", href: "#home" },
-    { label: "My Story", href: "/my-story" },
+    { label: "Curriculum", href: "#learn" },
     { label: "Pricing", href: "#pricing" },
     { label: "Resources", href: "/resources" },
     { label: "Contact", href: "#contact" }
@@ -74,14 +74,14 @@ export default function Navbar({
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <nav className="bg-gradient-to-r from-gray-900 via-blue-950 to-gray-900 backdrop-blur-lg border-b border-white/30 shadow-xl sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Title */}
           <div className="flex items-center space-x-3">
             <div className="w-20 h-20 rounded-lg overflow-hidden">
               <Image
-                src="/images/Home/logo.png"
+                src="https://xtubpexwrstuucwleaug.supabase.co/storage/v1/object/public/Images/logo.png"
                 alt="TheBrainDump Logo"
                 width={80}
                 height={80}
@@ -89,14 +89,14 @@ export default function Navbar({
               />
             </div>
             <span className="text-4xl font-bold hidden sm:block">
-              <span className="text-blue-600">The</span>
-              <span className="text-orange-500">Brain</span>
-              <span className="text-blue-600">Dump</span>
+              <span className="text-blue-400">The</span>
+              <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent">Brain</span>
+              <span className="text-blue-400">Dump</span>
             </span>
             <span className="text-2xl font-bold sm:hidden">
-              <span className="text-blue-600">The</span>
-              <span className="text-orange-500">Brain</span>
-              <span className="text-blue-600">Dump</span>
+              <span className="text-blue-400">The</span>
+              <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent">Brain</span>
+              <span className="text-blue-400">Dump</span>
             </span>
           </div>
 
@@ -108,9 +108,9 @@ export default function Navbar({
                 href={getNavHref(item.href)}
                 className={`px-3 py-2 text-sm font-semibold transition-all duration-300 relative ${
                   item.active
-                    ? 'text-blue-600'
-                    : 'text-gray-700 hover:text-orange-600'
-                } after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-orange-500 after:transition-all after:duration-300 hover:after:w-full`}
+                    ? 'text-blue-400'
+                    : 'text-gray-300 hover:text-blue-400'
+                } after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full`}
               >
                 {item.label}
               </a>
@@ -120,7 +120,7 @@ export default function Navbar({
             {isLoggedIn && !isPaid && (
               <button
                 onClick={onUnlockCourse}
-                className="px-4 py-2.5 text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                className="px-4 py-2.5 text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300"
               >
                 🔓 Unlock Full Course
               </button>
@@ -141,7 +141,7 @@ export default function Navbar({
               <div className="flex items-center">
                 <button
                   onClick={onSignIn}
-                  className="px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                  className="px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-full shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/50 transform hover:scale-105 transition-all duration-300"
                 >
                   Sign In
                 </button>
@@ -150,7 +150,7 @@ export default function Navbar({
               <div className="flex items-center space-x-4 ml-4 relative">
                 {/* Welcome Message */}
                 <div className="hidden lg:block">
-                  <span className="text-sm text-gray-600 font-medium">
+                  <span className="text-sm text-gray-300 font-medium">
                     Welcome back!
                   </span>
                 </div>
@@ -172,16 +172,16 @@ export default function Navbar({
                 
                 {/* Enhanced User Menu */}
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 top-12 mt-2 w-56 bg-white rounded-xl shadow-xl py-2 z-50 border border-gray-100 animate-in slide-in-from-top-2 duration-200">
+                  <div className="absolute right-0 top-12 mt-2 w-56 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-xl shadow-2xl py-2 z-50 border-2 border-white/30 animate-in slide-in-from-top-2 duration-200">
                     {/* User Info Header */}
-                    <div className="px-4 py-3 border-b border-gray-100">
+                    <div className="px-4 py-3 border-b border-white/10">
                       <div className="flex items-center space-x-3">
                         <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
                           <span className="text-white text-xs font-semibold">{userInitials}</span>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-gray-900 truncate">Account</p>
-                          <p className="text-xs text-green-600 flex items-center">
+                          <p className="text-sm font-semibold text-white truncate">Account</p>
+                          <p className="text-xs text-green-400 flex items-center">
                             <span className="w-2 h-2 bg-green-400 rounded-full mr-1.5"></span>
                             Online
                           </p>
@@ -193,9 +193,9 @@ export default function Navbar({
                     <div className="py-1">
                       <button
                         onClick={handleSignOutClick}
-                        className="flex items-center w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 transition-colors group"
+                        className="flex items-center w-full text-left px-4 py-2.5 text-sm text-gray-300 hover:bg-red-500/10 hover:text-red-400 transition-colors group"
                       >
-                        <svg className="w-4 h-4 mr-3 text-gray-400 group-hover:text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 mr-3 text-gray-400 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                         </svg>
                         Sign Out
@@ -211,7 +211,7 @@ export default function Navbar({
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="p-2 rounded-lg text-gray-600 hover:text-orange-400 hover:bg-orange-50 focus:outline-none focus:ring-2 focus:ring-orange-300"
+              className="p-2 rounded-lg text-gray-300 hover:text-blue-400 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               aria-label="Toggle menu"
             >
               <div className="w-5 h-5 relative">
@@ -241,13 +241,13 @@ export default function Navbar({
             isMenuOpen ? 'max-h-[40rem] opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="py-4 space-y-2 border-t border-gray-100">
+          <div className="py-4 space-y-2 border-t border-white/10">
             {navItems.map((item, index) => (
               <a
                 key={index}
                 href={getNavHref(item.href)}
                 onClick={() => setIsMenuOpen(false)}
-                className="block mx-2 mb-3 px-4 py-4 text-base font-semibold text-gray-700 bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-100 active:bg-gray-50 active:scale-95 transition-all duration-200"
+                className="block mx-2 mb-3 px-4 py-4 text-base font-semibold text-gray-300 bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-sm border border-white/20 hover:bg-gray-700/80 hover:text-blue-400 active:scale-95 transition-all duration-200"
               >
                 <div className="flex items-center justify-between">
                   <span>{item.label}</span>
@@ -266,7 +266,7 @@ export default function Navbar({
                     onUnlockCourse?.();
                     setIsMenuOpen(false);
                   }}
-                  className="block w-full px-4 py-3 text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl text-center shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="block w-full px-4 py-3 text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl text-center shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/50 transition-all duration-300"
                 >
                   🔓 Unlock Full Course
                 </button>
@@ -288,32 +288,32 @@ export default function Navbar({
             
             {/* Mobile Authentication Button */}
             {!isLoggedIn ? (
-              <div className="px-2 pt-4 border-t border-gray-100 mt-2">
+              <div className="px-2 pt-4 border-t border-white/10 mt-2">
                 <button
                   onClick={() => {
                     onSignIn?.();
                     setIsMenuOpen(false);
                   }}
-                  className="w-full px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="w-full px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-xl shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/50 transition-all duration-300"
                 >
                   Sign In
                 </button>
               </div>
             ) : (
-              <div className="px-2 pt-4 border-t border-gray-100 mt-2 space-y-3">
+              <div className="px-2 pt-4 border-t border-white/10 mt-2 space-y-3">
                 {/* Mobile User Info Header */}
-                <div className="flex items-center space-x-3 px-4 py-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
+                <div className="flex items-center space-x-3 px-4 py-3 bg-gray-800/80 backdrop-blur-sm rounded-xl border border-white/20">
                   <div className="relative">
                     <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
                       <span className="text-white text-sm font-semibold">{userInitials}</span>
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white shadow-sm">
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-900 shadow-sm">
                       <div className="w-full h-full bg-green-500 rounded-full animate-pulse"></div>
                     </div>
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-semibold text-gray-900">Account</p>
-                    <p className="text-xs text-green-600 flex items-center">
+                    <p className="text-sm font-semibold text-white">Account</p>
+                    <p className="text-xs text-green-400 flex items-center">
                       <span className="w-2 h-2 bg-green-400 rounded-full mr-1.5"></span>
                       Online
                     </p>
@@ -324,9 +324,9 @@ export default function Navbar({
                 <div className="space-y-1">
                   <button
                     onClick={handleSignOutClick}
-                    className="flex items-center w-full px-4 py-3 text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-700 rounded-lg transition-colors text-left group"
+                    className="flex items-center w-full px-4 py-3 text-sm font-medium text-gray-300 hover:bg-red-500/10 hover:text-red-400 rounded-lg transition-colors text-left group"
                   >
-                    <svg className="w-4 h-4 mr-3 text-gray-400 group-hover:text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 mr-3 text-gray-400 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                     </svg>
                     Sign Out

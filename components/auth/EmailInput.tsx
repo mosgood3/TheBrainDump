@@ -46,7 +46,7 @@ export default function EmailInput({ value, onChange, error, onValidationChange 
 
   return (
     <div>
-      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+      <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
         Email
       </label>
       <input
@@ -54,16 +54,15 @@ export default function EmailInput({ value, onChange, error, onValidationChange 
         id="email"
         value={value}
         onChange={handleChange}
-        className={`w-full px-3 py-2 bg-white border rounded-md focus:outline-none focus:ring-2 focus:border-transparent text-black ${
-          displayError 
-            ? 'border-red-500 focus:ring-red-500' 
-            : 'border-gray-300 focus:ring-blue-500'
+        className={`w-full px-3 py-2 bg-white/10 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent text-white placeholder-gray-400 ${
+          displayError
+            ? 'border-red-500 focus:ring-red-500'
+            : 'border-white/20 focus:ring-blue-500'
         }`}
-        style={{ color: '#000000', backgroundColor: '#ffffff' }}
         required
       />
       {displayError && (
-        <p className="text-red-500 text-xs mt-1">{displayError}</p>
+        <p className="text-red-400 text-xs mt-1">{displayError}</p>
       )}
     </div>
   );

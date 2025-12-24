@@ -10,13 +10,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^8.5.3",
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.87.1",
     "@tanstack/react-query": "^5.90.2",
     "@vercel/analytics": "^1.5.0",
-    "next": "15.4.6",
+    "next": "^15.5.9",
     "next-sitemap": "^4.2.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "recharts": "^3.6.0",
+    "stripe": "^20.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

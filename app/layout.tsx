@@ -3,7 +3,6 @@ import { Comic_Neue, Geist_Mono } from "next/font/google";
 import { QueryProvider } from "../context/QueryProvider";
 import { AuthProvider } from "../context/AuthContext";
 import { ProgressProvider } from "../context/ProgressContext";
-import DisclaimerGate from "../components/ui/DisclaimerGate";
 import StructuredData from "../components/seo/StructuredData";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
@@ -22,11 +21,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "The Brain Dump - Anxiety Relief & Freedom | Interactive Course",
+    default: "The Brain Dump - Learn to Build Apps | Beginner-Friendly Course",
     template: "%s | The Brain Dump"
   },
-  description: "The Brain Dump helps you overcome anxiety with proven techniques. Evidence-based anxiety relief course teaching CBT, mindfulness, and exposure therapy. Try 2 chapters FREE, then just $9.99 for lifetime access. Break free from anxiety, panic attacks, and worry today.",
-  keywords: ["the brain dump", "anxiety", "anxiety relief", "anxiety help", "overcome anxiety", "anxiety treatment", "anxiety course", "anxiety therapy", "CBT therapy", "mindfulness", "exposure therapy", "panic attacks", "mental health", "self-help anxiety", "cognitive behavioral therapy", "anxiety recovery", "anxiety freedom", "anxiety symptoms", "how to deal with anxiety", "anxiety management"],
+  description: "The Brain Dump teaches you to build real web applications from scratch. Beginner-friendly course covering Next.js, Supabase, Stripe payments, and deployment. Try 2 chapters FREE, then just $19.99 for lifetime access. Build a production-ready app today.",
+  keywords: ["the brain dump", "learn to code", "web development course", "build an app", "nextjs tutorial", "react course", "full stack development", "beginner coding", "app development", "stripe integration", "supabase tutorial", "deploy app", "coding course", "learn web development", "build products app", "javascript course", "typescript course", "beginner app development", "coding for beginners"],
   authors: [{ name: "TheBrainDump Team" }],
   creator: "TheBrainDump",
   publisher: "TheBrainDump",
@@ -48,8 +47,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://thebraindump.com',
-    title: 'The Brain Dump - Anxiety Relief & Freedom',
-    description: 'The Brain Dump helps you overcome anxiety with proven techniques. Evidence-based anxiety relief course teaching CBT, mindfulness, and exposure therapy. Try 2 chapters FREE, then just $9.99 for lifetime access. Break free from anxiety, panic attacks, and worry today.',
+    title: 'The Brain Dump - Learn to Build Apps',
+    description: 'The Brain Dump teaches you to build real web applications from scratch. Beginner-friendly course covering Next.js, Supabase, Stripe payments, and deployment. Try 2 chapters FREE, then just $19.99 for lifetime access. Build a production-ready app today.',
     siteName: 'The Brain Dump',
     images: [
       {
@@ -62,8 +61,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'The Brain Dump - Anxiety Relief & Freedom',
-    description: 'The Brain Dump helps you overcome anxiety with proven techniques. Evidence-based anxiety relief course teaching CBT, mindfulness, and exposure therapy. Try 2 chapters FREE, then just $9.99 for lifetime access. Break free from anxiety, panic attacks, and worry today.',
+    title: 'The Brain Dump - Learn to Build Apps',
+    description: 'The Brain Dump teaches you to build real web applications from scratch. Beginner-friendly course covering Next.js, Supabase, Stripe payments, and deployment. Try 2 chapters FREE, then just $19.99 for lifetime access. Build a production-ready app today.',
     images: ['/logo.png'],
   },
   robots: {
@@ -101,9 +100,7 @@ export default function RootLayout({
         <QueryProvider>
           <AuthProvider>
             <ProgressProvider>
-              <DisclaimerGate>
-                {children}
-              </DisclaimerGate>
+              {children}
             </ProgressProvider>
           </AuthProvider>
         </QueryProvider>

@@ -7,19 +7,24 @@ export default function ContactSection() {
   const router = useRouter();
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-blue-50 via-white to-indigo-50 relative overflow-hidden">
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-20 left-20 w-40 h-40 bg-blue-400/20 rounded-full blur-2xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-36 h-36 bg-orange-400/20 rounded-full blur-2xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-purple-400/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+    <section id="contact" className="py-20 relative overflow-hidden">
+      {/* Enhanced Background Elements - Extended for smooth transitions */}
+      <div className="absolute inset-0 opacity-20 overflow-visible">
+        {/* Orbs that blend with Resources section above */}
+        <div className="absolute -top-40 left-1/3 w-72 h-72 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute -top-32 right-1/4 w-80 h-80 bg-purple-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+
+        {/* Middle orbs */}
+        <div className="absolute top-20 left-20 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3s'}}></div>
+        <div className="absolute bottom-20 right-20 w-36 h-36 bg-orange-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1.5s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-purple-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2.5s'}}></div>
       </div>
 
       <div className="max-w-5xl mx-auto px-4 relative z-10">
-        <div className="text-center p-12 md:p-16 bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-200 shadow-2xl relative overflow-hidden">
+        <div className="text-center p-12 md:p-16 bg-white/5 backdrop-blur-lg rounded-3xl border border-white/10 shadow-2xl shadow-blue-500/10 relative overflow-hidden">
 
           {/* Inner glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent rounded-3xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent rounded-3xl"></div>
 
           <div className="relative z-10">
             {/* Icon */}
@@ -32,13 +37,13 @@ export default function ContactSection() {
             </div>
 
             <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">Questions or Need</span>
+              <span className="text-white">Questions or Need</span>
               <br />
-              <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Support?</span>
+              <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent">Support?</span>
             </h2>
 
-            <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-              We&apos;re here to guide you every step of the way. Get personalized support for your anxiety recovery journey.
+            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+              We&apos;re here to guide you every step of the way. Get personalized support for your app building journey.
             </p>
 
             {/* Enhanced buttons */}
@@ -77,16 +82,16 @@ export default function ContactSection() {
             </div>
 
             {/* Contact info with better styling */}
-            <div className="bg-gray-50 backdrop-blur-sm rounded-2xl p-6 border border-gray-200">
-              <div className="flex items-center justify-center gap-3 text-gray-800">
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <div className="flex items-center justify-center gap-3 text-white">
+                <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center border border-blue-500/30">
+                  <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                   </svg>
                 </div>
                 <span className="font-medium text-lg">thebraindumpllc@gmail.com</span>
               </div>
-              <p className="text-gray-600 text-sm mt-2">We typically respond within 24 hours</p>
+              <p className="text-gray-400 text-sm mt-2">We typically respond within 24 hours</p>
             </div>
           </div>
         </div>

@@ -20,10 +20,10 @@ export default function VideoIntro() {
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-            <span className="text-blue-600">Meet the Creator</span> <span className="text-orange-500">Behind Your Recovery</span>
+            <span className="text-blue-600">Meet the Creator</span> <span className="text-orange-500">Behind Your Journey</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Watch this personal message about why I built TheBrainDump and how it can help transform your relationship with anxiety
+            Watch this personal message about why I built TheBrainDump and how it can help you build real apps without coding experience
           </p>
         </div>
 

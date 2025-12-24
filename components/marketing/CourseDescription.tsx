@@ -6,23 +6,23 @@ export default function CourseDescription() {
   const steps = [
     {
       number: "01",
-      title: "Personalized Assessment",
-      description: "We start by understanding your unique anxiety patterns and triggers through a comprehensive questionnaire."
+      title: "Skills Assessment",
+      description: "We start by understanding your current experience level, learning style, and what you want to build through a quick assessment."
     },
     {
-      number: "02", 
-      title: "Custom Recovery Plan",
-      description: "Based on your assessment, we create a tailored step-by-step plan using evidence-based CBT and mindfulness techniques."
+      number: "02",
+      title: "Custom Learning Path",
+      description: "Based on your goals, we create a personalized roadmap using beginner-friendly lessons, AI assistance, and practical projects."
     },
     {
       number: "03",
       title: "Interactive Learning",
-      description: "Work through engaging lessons with Sam and Scout, your personal guides who make complex concepts simple and relatable."
+      description: "Work through engaging lessons that break down complex topics into simple steps. Build real features as you learn!"
     },
     {
       number: "04",
-      title: "Build Your Toolkit", 
-      description: "Develop practical skills and coping strategies that you can use immediately in real-world situations."
+      title: "Build Real Apps",
+      description: "Create actual working applications with databases, payments, and beautiful interfaces. Launch your app to the world!"
     }
   ];
 
@@ -40,7 +40,7 @@ export default function CourseDescription() {
             How This Course Works
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            A structured, personalized approach to understanding and managing your anxiety, designed to fit your unique needs and schedule.
+            A structured, beginner-friendly approach to building real apps without coding experience, designed to fit your learning style and schedule.
           </p>
         </div>
         

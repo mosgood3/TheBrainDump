@@ -100,9 +100,9 @@ export default function AuthForm({}: AuthFormProps) {
         // Existing user signed in successfully - check verification status
         const user = result.user as { id: string; email: string; email_confirmed_at?: string };
         if (user?.email_confirmed_at) {
-          // Email confirmed - redirect to lessons
+          // Email confirmed - redirect to courses
           console.log('✅ User signed in successfully:', user.email);
-          router.push('/lessons');
+          router.push('/courses');
         } else {
           // Email not confirmed - send to verification page
           console.log('⚠️ User signed in but email not verified');
@@ -132,7 +132,7 @@ export default function AuthForm({}: AuthFormProps) {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/50">
+    <div className="w-full max-w-md mx-auto bg-white/5 backdrop-blur-lg rounded-2xl p-8 shadow-2xl shadow-blue-500/10 border border-white/10">
       <AuthFormHeader />
 
       <ErrorMessage message={error} />
@@ -158,7 +158,7 @@ export default function AuthForm({}: AuthFormProps) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-3 px-4 rounded-xl font-semibold shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? 'Please wait...' : 'Sign In'}
         </button>
@@ -167,7 +167,7 @@ export default function AuthForm({}: AuthFormProps) {
       <ForgotPasswordButton onClick={handleForgotPassword} />
 
       <div className="mt-6 text-center">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-300">
           New users will automatically have an account created.
         </p>
       </div>

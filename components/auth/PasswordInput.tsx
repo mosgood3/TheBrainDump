@@ -96,7 +96,7 @@ export default function PasswordInput({ value, onChange, error, onValidationChan
 
   return (
     <div>
-      <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+      <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
         Password
       </label>
       <div className="relative">
@@ -105,20 +105,19 @@ export default function PasswordInput({ value, onChange, error, onValidationChan
           id="password"
           value={value}
           onChange={handleChange}
-          className={`w-full px-3 py-2 pr-10 bg-white border rounded-md focus:outline-none focus:ring-2 focus:border-transparent text-black ${
-            displayError 
-              ? 'border-red-500 focus:ring-red-500' 
+          className={`w-full px-3 py-2 pr-10 bg-white/10 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent text-white placeholder-gray-400 ${
+            displayError
+              ? 'border-red-500 focus:ring-red-500'
               : value && Object.values(requirements).every(req => req)
                 ? 'border-green-500 focus:ring-green-500'
-                : 'border-gray-300 focus:ring-blue-500'
+                : 'border-white/20 focus:ring-blue-500'
           }`}
-          style={{ color: '#000000', backgroundColor: '#ffffff' }}
           required
         />
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 focus:outline-none"
         >
           {showPassword ? (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,17 +131,17 @@ export default function PasswordInput({ value, onChange, error, onValidationChan
           )}
         </button>
       </div>
-      
+
       {/* Password strength meter */}
       {value && (
         <div className="mt-2">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs text-gray-600">Password strength:</span>
+            <span className="text-xs text-gray-400">Password strength:</span>
             <span className={`text-xs font-medium ${
-              strengthInfo.text === 'Weak' ? 'text-red-600' :
-              strengthInfo.text === 'Fair' ? 'text-yellow-600' :
-              strengthInfo.text === 'Good' ? 'text-blue-600' :
-              strengthInfo.text === 'Strong' ? 'text-green-600' : ''
+              strengthInfo.text === 'Weak' ? 'text-red-400' :
+              strengthInfo.text === 'Fair' ? 'text-yellow-400' :
+              strengthInfo.text === 'Good' ? 'text-blue-400' :
+              strengthInfo.text === 'Strong' ? 'text-green-400' : ''
             }`}>
               {strengthInfo.text}
             </span>
@@ -154,20 +153,20 @@ export default function PasswordInput({ value, onChange, error, onValidationChan
                 className={`h-2 flex-1 rounded-full ${
                   level <= strengthInfo.level
                     ? strengthInfo.color
-                    : 'bg-gray-200'
+                    : 'bg-white/20'
                 }`}
               />
             ))}
           </div>
         </div>
       )}
-      
-      <p className="text-xs text-gray-500 mt-2">
+
+      <p className="text-xs text-gray-400 mt-2">
         Password must be at least 8 characters with uppercase, lowercase, number, and special character
       </p>
-      
+
       {displayError && (
-        <p className="text-red-500 text-xs mt-1">{displayError}</p>
+        <p className="text-red-400 text-xs mt-1">{displayError}</p>
       )}
     </div>
   );

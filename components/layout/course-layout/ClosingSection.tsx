@@ -3,9 +3,10 @@
 import React from 'react';
 import { useProgress } from '../../../context/ProgressContext';
 import { useAuth } from '../../../context/AuthContext';
-import { lessons } from '../../lessons/LessonIndex';
+import { getCourseBySlug } from '../../courses/CourseIndex';
 
 interface ClosingSectionProps {
+  courseSlug: string;
   currentLessonId: number | null;
   currentSublessonId: string | null;
   expandedLessons: Set<number>;
@@ -14,6 +15,7 @@ interface ClosingSectionProps {
 }
 
 export function ClosingSection({
+  courseSlug,
   currentLessonId,
   currentSublessonId,
   expandedLessons,
@@ -25,14 +27,16 @@ export function ClosingSection({
     hasCompletedAssessment
   } = useProgress();
 
-  const { isPaid } = useAuth();
+  const { hasCourseAccess } = useAuth();
 
-  // Get lesson 7 (the final lesson)
-  const closingLesson = lessons.find(lesson => lesson.id === 7);
+  // Get the last lesson from the course
+  const course = getCourseBySlug(courseSlug);
+  const closingLesson = course?.lessons[course.lessons.length - 1];
 
   if (!closingLesson) return null;
 
-  const isLocked = !hasCompletedAssessment() || !isPaid;
+  const hasAccess = hasCourseAccess(courseSlug);
+  const isLocked = !hasCompletedAssessment() || !hasAccess;
   const isCurrentLesson = currentLessonId === closingLesson.id;
   const lessonCompleted = isLessonCompleted(closingLesson.id);
   const isExpanded = expandedLessons.has(closingLesson.id);
@@ -41,10 +45,10 @@ export function ClosingSection({
     <div className="px-6 py-5">
       {/* Section Header */}
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Course Completion</h3>
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Course Completion</h3>
         <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-          <span className="text-xs font-medium text-purple-700">Final Lesson</span>
+          <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+          <span className="text-xs font-medium text-purple-400">Final Lesson</span>
         </div>
       </div>
 
@@ -57,27 +61,27 @@ export function ClosingSection({
               if (closingLesson.sublessons && closingLesson.sublessons.length > 0 && !isLocked) {
                 onToggleLessonExpanded(closingLesson.id);
               } else {
-                onNavigation(`/chapter/${closingLesson.id}`);
+                onNavigation(`/course/${courseSlug}/chapter/${closingLesson.id}`);
               }
             }}
             disabled={isLocked}
             className={`w-full flex items-center p-3 rounded-lg text-left transition-all group ${
               isCurrentLesson
-                ? 'bg-purple-50 border-2 border-purple-200 shadow-sm'
+                ? 'bg-purple-500/20 border-2 border-purple-500/50 shadow-lg shadow-purple-500/20'
                 : isLocked
-                  ? 'bg-gray-50 border border-gray-200 opacity-60 cursor-not-allowed'
-                  : 'bg-gray-50 border border-gray-200 hover:bg-gray-100 hover:border-gray-300'
+                  ? 'bg-white/5 border border-white/10 opacity-60 cursor-not-allowed'
+                  : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
             }`}
           >
             {/* Lesson Number/Status Icon */}
             <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0 ${
               isCurrentLesson
-                ? 'bg-purple-600 text-white'
+                ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
                 : isLocked
-                  ? 'bg-gray-300 text-gray-500'
+                  ? 'bg-gray-600 text-gray-400'
                   : lessonCompleted
-                    ? 'bg-green-500 text-white'
-                    : 'bg-white text-gray-600 border border-gray-300'
+                    ? 'bg-green-500 text-white shadow-lg shadow-green-500/50'
+                    : 'bg-white/10 text-gray-300 border border-white/20'
             }`}>
               {isLocked ? (
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -95,12 +99,12 @@ export function ClosingSection({
             {/* Lesson Content */}
             <div className="min-w-0 flex-1">
               <div className={`font-semibold text-sm mb-1 ${
-                isCurrentLesson ? 'text-purple-900' : isLocked ? 'text-gray-500' : 'text-gray-900'
+                isCurrentLesson ? 'text-purple-300' : isLocked ? 'text-gray-500' : 'text-white'
               }`}>
                 {closingLesson.title}
               </div>
               <div className={`text-xs ${
-                isCurrentLesson ? 'text-purple-600' : isLocked ? 'text-gray-400' : 'text-gray-500'
+                isCurrentLesson ? 'text-purple-400' : isLocked ? 'text-gray-500' : 'text-gray-400'
               }`}>
                 {closingLesson.sublessons?.length || 0} parts
                 {isLocked ? ' • Locked' : ''}
@@ -110,7 +114,7 @@ export function ClosingSection({
             {/* Expand Arrow */}
             {closingLesson.sublessons && closingLesson.sublessons.length > 0 && !isLocked && (
               <div className={`transition-transform ${isExpanded ? 'rotate-90' : ''}`}>
-                <svg className={`w-4 h-4 ${isCurrentLesson ? 'text-purple-600' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-4 h-4 ${isCurrentLesson ? 'text-purple-400' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </div>
@@ -128,15 +132,15 @@ export function ClosingSection({
                   <div key={sublesson.id} className="relative">
                     {/* Connection Line */}
                     {index > 0 && (
-                      <div className="absolute left-2 -top-1.5 w-px h-3 bg-gray-200"></div>
+                      <div className="absolute left-2 -top-1.5 w-px h-3 bg-white/20"></div>
                     )}
 
                     <button
-                      onClick={() => onNavigation(`/chapter/${closingLesson.id}/${sublesson.id}`)}
+                      onClick={() => onNavigation(`/course/${courseSlug}/chapter/${closingLesson.id}/${sublesson.id}`)}
                       className={`w-full flex items-center p-2.5 rounded-md text-left transition-all ${
                         isCurrentSublesson
-                          ? 'bg-purple-100 border border-purple-200'
-                          : 'bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                          ? 'bg-purple-500/20 border border-purple-500/50'
+                          : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
                       }`}
                     >
                       {/* Progress Indicator */}
@@ -145,7 +149,7 @@ export function ClosingSection({
                           ? 'bg-purple-600 text-white border-purple-600'
                           : isSublessonCompleted
                             ? 'bg-green-500 text-white border-green-500'
-                            : 'bg-white text-gray-400 border-gray-300'
+                            : 'bg-white/10 text-gray-400 border-white/20'
                       }`}>
                         {isSublessonCompleted ? (
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -161,7 +165,7 @@ export function ClosingSection({
                       {/* Sublesson Title */}
                       <div className="min-w-0 flex-1">
                         <div className={`font-medium text-xs truncate ${
-                          isCurrentSublesson ? 'text-purple-900' : 'text-gray-700'
+                          isCurrentSublesson ? 'text-purple-300' : 'text-gray-300'
                         }`}>
                           {sublesson.title}
                         </div>

@@ -1,87 +1,142 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 import { MAX_LESSONS } from '../lib/constants';
 
-interface ProgressData {
-  user_id: string;
-  has_completed_intro: boolean;
-  intro_steps_completed: number;
-  has_completed_assessment: boolean;
-  completed_lessons: number[];
-  lesson_progress: Record<string, {
-    completed: boolean;
-    completed_at: string;
-    time_spent: number;
-    score?: number;
-  }>;
-  created_at: string;
-  updated_at: string;
-}
-
 interface ProgressContextType {
-  progress: ProgressData | null;
   loading: boolean;
   error: string | null;
-  refreshProgress: () => Promise<void>;
-  completeIntroStep: (stepNumber: number, totalSteps: number) => Promise<void>;
-  completeAssessment: (assessmentData: Record<string, any>) => Promise<void>;
-  completeLesson: (lessonId: number) => Promise<void>;
-  toggleLessonCompletion: (lessonId: number) => Promise<void>;
+  completedLessons: number[];
+  completeLesson: (lessonId: number, courseSlug?: string) => Promise<void>;
+  uncompleteLesson: (lessonId: number, courseSlug?: string) => Promise<void>;
   isLessonCompleted: (lessonId: number) => boolean;
   getCompletedLessonsCount: () => number;
-  hasCompletedIntro: () => boolean;
-  hasCompletedAssessment: () => boolean;
-  completedLessons: number[];
   getNextIncompleteLesson: () => number;
+  hasCompletedAssessment: () => boolean;
+  refreshProgress: (userId: string) => Promise<void>;
 }
 
 const ProgressContext = createContext<ProgressContextType | null>(null);
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [completedLessons, setCompletedLessons] = useState<number[]>([]);
-  const [loading] = useState(false);
-  const [error] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  // Mock progress data - no backend
-  const progress: ProgressData = {
-    user_id: 'mock-user',
-    has_completed_intro: true,
-    intro_steps_completed: 0,
-    has_completed_assessment: true,
-    completed_lessons: completedLessons,
-    lesson_progress: {},
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+  // Fetch progress when user changes
+  useEffect(() => {
+    const fetchUserAndProgress = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          setUserId(session.user.id);
+          await fetchProgress(session.user.id);
+        } else {
+          setCompletedLessons([]);
+        }
+      } catch (err) {
+        console.error('Error fetching user progress:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserAndProgress();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user) {
+        setUserId(session.user.id);
+        await fetchProgress(session.user.id);
+      } else {
+        setUserId(null);
+        setCompletedLessons([]);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const fetchProgress = async (uid: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('lesson_progress')
+        .select('lesson_id')
+        .eq('user_id', uid)
+        .eq('completed', true);
+
+      if (error) {
+        console.error('Error fetching progress:', error);
+        return;
+      }
+
+      const lessonIds = data?.map(row => row.lesson_id) || [];
+      setCompletedLessons(lessonIds);
+    } catch (err) {
+      console.error('Error fetching progress:', err);
+    }
   };
 
-  const refreshProgress = async () => {
-    // No-op: backend removed
+  const refreshProgress = async (uid: string) => {
+    await fetchProgress(uid);
   };
 
-  const completeIntroStep = async (stepNumber: number, totalSteps: number) => {
-    // No-op: backend removed
-  };
+  const completeLesson = async (lessonId: number, courseSlug: string = 'brain-dump') => {
+    if (!userId) return;
 
-  const completeAssessment = async (assessmentData: Record<string, any>) => {
-    // No-op: backend removed
-  };
-
-  const completeLesson = async (lessonId: number) => {
-    setCompletedLessons(prev =>
-      prev.includes(lessonId) ? prev : [...prev, lessonId]
-    );
-  };
-
-  const toggleLessonCompletion = async (lessonId: number) => {
-    const isCurrentlyCompleted = completedLessons.includes(lessonId);
-
-    if (isCurrentlyCompleted) {
-      setCompletedLessons(prev => prev.filter(id => id !== lessonId));
-    } else {
+    try {
+      // Optimistically update UI
       setCompletedLessons(prev =>
         prev.includes(lessonId) ? prev : [...prev, lessonId]
       );
+
+      // Persist to database
+      const { error } = await supabase
+        .from('lesson_progress')
+        .upsert({
+          user_id: userId,
+          course_slug: courseSlug,
+          lesson_id: lessonId,
+          completed: true,
+          completed_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id,course_slug,lesson_id'
+        });
+
+      if (error) {
+        console.error('Error saving progress:', error);
+        // Revert on error
+        setCompletedLessons(prev => prev.filter(id => id !== lessonId));
+      }
+    } catch (err) {
+      console.error('Error completing lesson:', err);
+    }
+  };
+
+  const uncompleteLesson = async (lessonId: number, courseSlug: string = 'brain-dump') => {
+    if (!userId) return;
+
+    try {
+      // Optimistically update UI
+      setCompletedLessons(prev => prev.filter(id => id !== lessonId));
+
+      // Update in database
+      const { error } = await supabase
+        .from('lesson_progress')
+        .update({ completed: false })
+        .eq('user_id', userId)
+        .eq('course_slug', courseSlug)
+        .eq('lesson_id', lessonId);
+
+      if (error) {
+        console.error('Error updating progress:', error);
+        // Revert on error
+        setCompletedLessons(prev => [...prev, lessonId]);
+      }
+    } catch (err) {
+      console.error('Error uncompleting lesson:', err);
     }
   };
 
@@ -111,20 +166,16 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   };
 
   const value: ProgressContextType = {
-    progress,
     loading,
     error,
-    refreshProgress,
-    completeIntroStep,
-    completeAssessment,
+    completedLessons,
     completeLesson,
-    toggleLessonCompletion,
+    uncompleteLesson,
     isLessonCompleted,
     getCompletedLessonsCount,
-    hasCompletedIntro,
-    hasCompletedAssessment,
-    completedLessons,
     getNextIncompleteLesson,
+    hasCompletedAssessment,
+    refreshProgress,
   };
 
   return (

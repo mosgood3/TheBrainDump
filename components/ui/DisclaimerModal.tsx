@@ -53,7 +53,7 @@ export default function DisclaimerModal({ onAccept, isLoading = false }: Disclai
             <span className="text-gray-400">•</span>
             <span className="text-gray-600 text-sm">
               {viewMode === 'terms' && 'Terms of Service'}
-              {viewMode === 'disclaimer' && 'Medical Disclaimer'}
+              {viewMode === 'disclaimer' && 'Educational Disclaimer'}
               {viewMode === 'privacy' && 'Privacy Policy'}
             </span>
           </div>
@@ -63,17 +63,17 @@ export default function DisclaimerModal({ onAccept, isLoading = false }: Disclai
         <div className="flex-1 overflow-y-auto p-6">
           {viewMode === 'summary' && (
             <div className="space-y-6">
-              {/* Medical Disclaimer Alert */}
-              <div className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
+              {/* Educational Disclaimer Alert */}
+              <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg">
                 <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                   </svg>
-                  Medical Disclaimer
+                  Educational Disclaimer
                 </h3>
                 <p className="text-gray-800 text-sm leading-relaxed">
-                  TheBrainDump is <strong>NOT a substitute for professional medical advice, diagnosis, or treatment</strong>.
-                  This service provides educational and self-help resources only.
+                  TheBrainDump provides <strong>educational content and tutorials for learning purposes</strong>.
+                  This service is designed to help you learn programming and web development skills.
                 </p>
               </div>
 
@@ -81,10 +81,10 @@ export default function DisclaimerModal({ onAccept, isLoading = false }: Disclai
               <div className="space-y-3">
                 <h3 className="text-lg font-semibold text-gray-900">You understand that:</h3>
                 <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm pl-2">
-                  <li>This platform provides <strong>educational content only</strong> and does not replace therapy, counseling, or medical care.</li>
-                  <li>You should <strong>always consult with qualified healthcare professionals</strong> before making any decisions about your mental health.</li>
-                  <li><strong>Never ignore professional medical advice</strong> or delay seeking it because of content on this platform.</li>
-                  <li>If you're experiencing a mental health crisis or having thoughts of self-harm, <strong>contact emergency services immediately</strong> (988 Suicide & Crisis Lifeline or 911).</li>
+                  <li>This platform provides <strong>educational content for learning purposes</strong> and practical coding tutorials.</li>
+                  <li>Code examples and tutorials are provided <strong>as-is for educational purposes</strong> and may require adaptation for production use.</li>
+                  <li>You are responsible for <strong>testing and validating any code</strong> before using it in production environments.</li>
+                  <li>Always follow <strong>best practices for security, performance, and scalability</strong> when building production applications.</li>
                 </ul>
               </div>
 
@@ -106,7 +106,7 @@ export default function DisclaimerModal({ onAccept, isLoading = false }: Disclai
                   onClick={() => setViewMode('disclaimer')}
                   className="w-full flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all text-left"
                 >
-                  <span className="font-medium text-gray-900">Medical Disclaimer</span>
+                  <span className="font-medium text-gray-900">Educational Disclaimer</span>
                   <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
@@ -141,19 +141,19 @@ export default function DisclaimerModal({ onAccept, isLoading = false }: Disclai
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">2. Description of Service</h3>
                   <p className="mb-2">TheBrainDump is a web-based platform that provides:</p>
                   <ul className="list-disc list-inside space-y-1">
-                    <li>Anxiety assessment tools and questionnaires</li>
-                    <li>AI-powered personalized lessons</li>
-                    <li>Progress tracking and monitoring tools</li>
-                    <li>Educational content about anxiety management</li>
-                    <li>Self-help resources and coping strategies</li>
+                    <li>Interactive coding tutorials and lessons</li>
+                    <li>Full-stack development courses</li>
+                    <li>Progress tracking and completion monitoring</li>
+                    <li>Educational content about modern web technologies</li>
+                    <li>Code examples and project-based learning</li>
                   </ul>
                 </section>
 
                 <section>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">3. Medical Disclaimer</h3>
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">3. Educational Purpose</h3>
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <p className="font-semibold text-gray-900 mb-2">IMPORTANT:</p>
-                    <p>TheBrainDump is NOT a substitute for professional medical advice, diagnosis, or treatment. Our service provides educational and self-help resources only. Always seek the advice of your physician or other qualified health provider with any questions regarding a medical condition.</p>
+                    <p>TheBrainDump provides educational content for learning programming and web development. Code examples are provided as-is for educational purposes and may require modification, testing, and security reviews before production use. Always follow best practices and industry standards when deploying applications.</p>
                   </div>
                 </section>
 
@@ -216,90 +216,87 @@ export default function DisclaimerModal({ onAccept, isLoading = false }: Disclai
 
           {viewMode === 'disclaimer' && (
             <div className="prose prose-sm max-w-none">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Medical Disclaimer</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Educational Disclaimer</h2>
               <p className="text-sm text-gray-600 mb-6">Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
 
-              <div className="bg-amber-50 border-2 border-amber-200 rounded-lg p-6 mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">IMPORTANT MEDICAL DISCLAIMER</h3>
+              <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">IMPORTANT EDUCATIONAL DISCLAIMER</h3>
                 <p className="text-gray-800 font-medium mb-3">
-                  TheBrainDump is NOT a substitute for professional medical advice, diagnosis, or treatment.
+                  TheBrainDump provides educational content for learning programming and web development.
                 </p>
                 <p className="text-gray-700">
-                  The information and tools provided through this platform are for educational and self-help purposes only.
+                  The code examples, tutorials, and tools provided through this platform are for educational purposes only.
                 </p>
               </div>
 
               <div className="space-y-6 text-gray-700">
                 <section>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">1. Not Medical Treatment</h3>
-                  <p className="mb-2">TheBrainDump and its AI-powered content, assessments, lessons, and resources are designed to provide general information and self-help tools related to anxiety management. They are:</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">1. Educational Content Only</h3>
+                  <p className="mb-2">TheBrainDump and its tutorials, code examples, lessons, and resources are designed to provide educational content for learning programming and web development. They are:</p>
                   <ul className="list-disc list-inside space-y-1">
-                    <li><strong>NOT</strong> a replacement for professional mental health treatment</li>
-                    <li><strong>NOT</strong> intended to diagnose any medical or mental health condition</li>
-                    <li><strong>NOT</strong> a substitute for therapy, counseling, or psychiatric care</li>
-                    <li><strong>NOT</strong> meant to replace medication prescribed by healthcare professionals</li>
-                    <li><strong>NOT</strong> emergency mental health services</li>
+                    <li><strong>NOT</strong> production-ready code without proper testing and review</li>
+                    <li><strong>NOT</strong> intended to be deployed without security audits</li>
+                    <li><strong>NOT</strong> a substitute for professional software development consultation</li>
+                    <li><strong>NOT</strong> guaranteed to be free from bugs or vulnerabilities</li>
+                    <li><strong>NOT</strong> maintained or updated for security patches</li>
                   </ul>
                 </section>
 
                 <section>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">2. Always Consult Healthcare Professionals</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">2. Production Use Disclaimer</h3>
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <p className="font-semibold text-gray-900 mb-2">Professional Consultation Required:</p>
-                    <p>Always seek the advice of your physician, psychiatrist, psychologist, or other qualified health provider with any questions regarding anxiety, mental health conditions, or treatment options.</p>
+                    <p className="font-semibold text-gray-900 mb-2">Code Review Required:</p>
+                    <p>Before using any code from TheBrainDump in production environments, you should perform thorough testing, security reviews, and code audits. Consider consulting with experienced developers for critical applications.</p>
                   </div>
-                  <p className="mt-3">You should consult with healthcare professionals before:</p>
+                  <p className="mt-3">You should review and modify code before:</p>
                   <ul className="list-disc list-inside space-y-1 mt-2">
-                    <li>Starting any anxiety management program</li>
-                    <li>Making changes to existing treatment or medication</li>
-                    <li>Using our techniques if you have severe anxiety or panic disorder</li>
-                    <li>Discontinuing any prescribed treatment</li>
+                    <li>Deploying to production environments</li>
+                    <li>Handling sensitive user data</li>
+                    <li>Processing payments or financial information</li>
+                    <li>Building mission-critical applications</li>
                   </ul>
                 </section>
 
                 <section>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">3. Do Not Ignore Professional Advice</h3>
-                  <p><strong>Never disregard professional medical advice or delay in seeking it because of something you read on TheBrainDump.</strong></p>
-                  <p className="mt-2">If you think you may have a medical emergency or mental health crisis, call your doctor, 911, or the 988 Suicide & Crisis Lifeline immediately.</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">3. No Warranty or Guarantee</h3>
+                  <p><strong>Code examples and tutorials are provided "as-is" without any warranties or guarantees.</strong></p>
+                  <p className="mt-2">We make no guarantees about the accuracy, security, or suitability of code for any particular purpose. Always test and validate thoroughly.</p>
                 </section>
 
                 <section>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">4. AI-Generated Content Limitations</h3>
-                  <p className="mb-2">Our personalized lessons are:</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">4. Learning Outcomes</h3>
+                  <p className="mb-2">Educational content is designed to teach concepts and techniques:</p>
                   <ul className="list-disc list-inside space-y-1">
-                    <li>Generated by artificial intelligence, not healthcare professionals</li>
-                    <li>Based on general principles, not personalized medical assessment</li>
-                    <li>Not reviewed by medical professionals before delivery</li>
-                    <li>Intended to complement, not replace, professional care</li>
+                    <li>Learning outcomes vary based on individual effort and background</li>
+                    <li>Examples are simplified for educational clarity</li>
+                    <li>Production applications require additional considerations</li>
+                    <li>Best practices may evolve over time</li>
                   </ul>
                 </section>
 
                 <section>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">5. Emergency Situations</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">5. Security Considerations</h3>
                   <div className="bg-amber-50 border border-amber-300 rounded-lg p-4">
-                    <p className="font-semibold text-gray-900 mb-2">SEEK IMMEDIATE PROFESSIONAL HELP IF YOU EXPERIENCE:</p>
+                    <p className="font-semibold text-gray-900 mb-2">IMPORTANT SECURITY NOTICE:</p>
                     <ul className="list-disc list-inside space-y-1">
-                      <li>Thoughts of self-harm or suicide</li>
-                      <li>Severe panic attacks or anxiety that impairs daily functioning</li>
-                      <li>Any mental health crisis or emergency situation</li>
+                      <li>Always implement proper authentication and authorization</li>
+                      <li>Sanitize and validate all user inputs</li>
+                      <li>Use environment variables for sensitive credentials</li>
+                      <li>Keep dependencies updated and scan for vulnerabilities</li>
+                      <li>Follow OWASP security guidelines</li>
+                      <li>Implement rate limiting and DDoS protection</li>
                     </ul>
-                    <div className="mt-3 pt-3 border-t border-amber-200">
-                      <p className="font-semibold text-gray-900 mb-1">Emergency Resources:</p>
-                      <p><strong>988</strong> - Suicide & Crisis Lifeline (24/7)</p>
-                      <p><strong>911</strong> - Emergency Services</p>
-                      <p>Visit your nearest emergency room</p>
-                    </div>
                   </div>
                 </section>
 
                 <section>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">6. No Guarantees</h3>
-                  <p>While our content is based on evidence-based practices, we make no guarantees about results. Individual outcomes vary, and success depends on many factors including severity of symptoms, consistency of practice, and concurrent professional treatment.</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">6. No Guarantees of Results</h3>
+                  <p>While our content is based on modern development practices, we make no guarantees about learning outcomes or career advancement. Success depends on many factors including dedication, practice, and prior experience.</p>
                 </section>
 
                 <section>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">7. No Doctor-Patient Relationship</h3>
-                  <p>Use of TheBrainDump does not create a doctor-patient relationship between you and theBrainDump LLC, its employees, or any healthcare professionals. We do not provide medical advice, diagnosis, or treatment through this platform.</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">7. No Professional Services</h3>
+                  <p>Use of TheBrainDump does not create a professional services relationship. We do not provide consulting, code review, or professional development services through this platform.</p>
                 </section>
               </div>
             </div>
@@ -313,7 +310,7 @@ export default function DisclaimerModal({ onAccept, isLoading = false }: Disclai
               <div className="space-y-6 text-gray-700">
                 <section>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">1. Introduction</h3>
-                  <p>theBrainDump LLC ("we," "our," or "us") operates TheBrainDump, a web-based anxiety management platform. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our service.</p>
+                  <p>theBrainDump LLC ("we," "our," or "us") operates TheBrainDump, a web-based coding education platform. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our service.</p>
                   <p className="mt-2">By using TheBrainDump, you consent to the data practices described in this policy.</p>
                 </section>
 
@@ -325,8 +322,8 @@ export default function DisclaimerModal({ onAccept, isLoading = false }: Disclai
                   <ul className="list-disc list-inside space-y-1">
                     <li>Email address and account credentials</li>
                     <li>Name and profile information</li>
-                    <li>Assessment responses and anxiety-related data</li>
-                    <li>Recovery plan preferences and progress data</li>
+                    <li>Course progress and completion data</li>
+                    <li>Learning preferences and tutorial interactions</li>
                     <li>Communication preferences</li>
                   </ul>
 
@@ -339,16 +336,16 @@ export default function DisclaimerModal({ onAccept, isLoading = false }: Disclai
                     <li>Session duration and frequency</li>
                   </ul>
 
-                  <h4 className="text-base font-medium text-gray-900 mb-2 mt-3">2.3 Health-Related Information</h4>
-                  <p>We collect anxiety-related information through assessments and user inputs. This data is used solely to personalize your experience and provide relevant resources.</p>
+                  <h4 className="text-base font-medium text-gray-900 mb-2 mt-3">2.3 Learning Data</h4>
+                  <p>We collect information about your learning progress, including completed lessons, code submissions, and quiz results. This data is used solely to track your progress and provide personalized learning recommendations.</p>
                 </section>
 
                 <section>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">3. How We Use Your Information</h3>
                   <ul className="list-disc list-inside space-y-1">
-                    <li>Provide and personalize the service</li>
-                    <li>Generate AI-powered lessons and recommendations</li>
-                    <li>Track your progress and improvement</li>
+                    <li>Provide and personalize the learning experience</li>
+                    <li>Generate tutorials and course recommendations</li>
+                    <li>Track your learning progress and achievements</li>
                     <li>Send service-related communications</li>
                     <li>Improve and optimize our platform</li>
                     <li>Ensure platform security and prevent fraud</li>

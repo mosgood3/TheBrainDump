@@ -6,7 +6,6 @@ import { useAuth } from '../../../../context/AuthContext';
 import { useProgress } from '../../../../context/ProgressContext';
 import CourseLayout from '../../../../components/layout/CourseLayout';
 import { lessons, type SublessonInfo } from '../../../../components/lessons/LessonIndex';
-import StripeCheckout from '../../../../components/ui/StripeCheckout';
 
 interface SublessonPageProps {
   params: Promise<{
@@ -17,21 +16,13 @@ interface SublessonPageProps {
 
 export default function SublessonPage({ params }: SublessonPageProps) {
   const { user, loading, isPaid, userProfile } = useAuth();
-  const { hasCompletedAssessment } = useProgress();
   const router = useRouter();
   const [lessonId, setLessonId] = useState<number | null>(null);
   const [sublessonId, setSublessonId] = useState<string | null>(null);
   const [lesson, setLesson] = useState<typeof lessons[0] | null>(null);
   const [sublesson, setSublesson] = useState<SublessonInfo | null>(null);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
-  // Check sessionStorage to see if we've already shown the payment prompt this session
-  const [hasShownPaymentPrompt, setHasShownPaymentPrompt] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return sessionStorage.getItem('hasShownPaymentPrompt') === 'true';
-    }
-    return false;
-  });
+  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
 
   useEffect(() => {
     const getParams = async () => {
@@ -56,7 +47,7 @@ export default function SublessonPage({ params }: SublessonPageProps) {
     }
   }, [user, loading, router]);
 
-  // Check lesson access - redirect to checkout for paid lessons
+  // Check lesson access - redirect to lessons page for paid lessons
   useEffect(() => {
     // Wait for user profile to load before checking payment status
     if (lessonId && user && !loading && userProfile !== null) {
@@ -64,24 +55,24 @@ export default function SublessonPage({ params }: SublessonPageProps) {
       const isFreeLesson = lessonId === 1 || lessonId === 2;
 
       // Check if user has access to this lesson
-      const hasAccess = isFreeLesson || (hasCompletedAssessment() && isPaid);
+      const hasAccess = isFreeLesson || isPaid;
 
-      if (!hasAccess && !hasShownPaymentPrompt) {
-        // User needs to pay - show checkout modal
-        setCheckoutOpen(true);
-        setHasShownPaymentPrompt(true);
-        sessionStorage.setItem('hasShownPaymentPrompt', 'true');
-      } else if (hasAccess && checkoutOpen) {
-        // User has access - close checkout if it's open
-        setCheckoutOpen(false);
-        sessionStorage.removeItem('hasShownPaymentPrompt');
+      if (!hasAccess) {
+        // User needs to pay - redirect to lessons page
+        router.push('/courses');
+      } else {
+        // User has access, stop checking
+        setIsCheckingAccess(false);
       }
+    } else if (lessonId && user && !loading && userProfile !== null) {
+      // If we have all the data and access is granted
+      setIsCheckingAccess(false);
     }
-  }, [lessonId, user, loading, userProfile, hasCompletedAssessment, isPaid, hasShownPaymentPrompt, checkoutOpen]);
+  }, [lessonId, user, loading, userProfile, isPaid, router]);
 
-  if (loading) {
+  if (loading || isCheckingAccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-orange-50">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900">
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -96,11 +87,11 @@ export default function SublessonPage({ params }: SublessonPageProps) {
       <CourseLayout>
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Sublesson Not Found</h1>
-            <p className="text-gray-600 mb-4">The requested sublesson could not be found.</p>
+            <h1 className="text-2xl font-bold text-white mb-2">Sublesson Not Found</h1>
+            <p className="text-gray-400 mb-4">The requested sublesson could not be found.</p>
             <button
               onClick={() => router.push('/chapter/1')}
-              className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg shadow-blue-500/50"
             >
               Go to Introduction
             </button>
@@ -140,39 +131,61 @@ export default function SublessonPage({ params }: SublessonPageProps) {
     return nextLesson;
   };
 
+  const isNextLessonAccessible = () => {
+    const nextLesson = getNextLesson();
+    if (!nextLesson) return false;
+    // Lessons 1 and 2 are free
+    const isFreeLesson = nextLesson.id === 1 || nextLesson.id === 2;
+    return isFreeLesson || isPaid;
+  };
+
   const previousSublesson = getPreviousSublesson();
   const nextSublesson = getNextSublesson();
   const nextLesson = getNextLesson();
+  const canAccessNextLesson = isNextLessonAccessible();
 
   return (
-    <>
-      <div className={checkoutOpen ? 'filter blur-lg pointer-events-none' : ''}>
-        <CourseLayout>
-          <div className="flex-1 px-2 py-4 sm:p-6">
+    <CourseLayout>
+          {/* Animated Background - matching home page */}
+          <div className="absolute inset-0 opacity-20 pointer-events-none">
+            <div className="absolute inset-0" style={{
+              backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)',
+              backgroundSize: '50px 50px'
+            }}></div>
+          </div>
+
+          {/* Floating Orbs */}
+          <div className="absolute inset-0 opacity-20 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-20 right-20 w-80 h-80 bg-orange-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
+          </div>
+
+          <div className="flex-1 px-2 py-4 sm:p-6 relative z-10">
             <div className="max-w-4xl mx-auto">
 
               {/* Lesson Context Header */}
               <div className="mb-6">
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
                   <span>{lesson.category}</span>
                   <span>•</span>
                   <span>{lesson.title}</span>
                 </div>
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">{sublesson.icon}</span>
-                  <h1 className="text-3xl font-bold text-gray-900">{sublesson.title}</h1>
+                  <h1 className="text-3xl font-bold text-white">{sublesson.title}</h1>
                 </div>
 
                 {/* Progress Bar */}
                 {lesson.sublessons && lesson.sublessons.length > 1 && (
                   <div className="mb-4">
-                    <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+                    <div className="flex items-center justify-between text-sm text-gray-400 mb-2">
                       <span>Lesson Progress</span>
                       <span>{getCurrentSublessonIndex() + 1} of {lesson.sublessons.length}</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-white/10 rounded-full h-2">
                       <div
-                        className="bg-gradient-to-r from-blue-500 to-orange-500 h-2 rounded-full transition-all duration-300"
+                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300 shadow-lg shadow-blue-500/50"
                         style={{ width: `${((getCurrentSublessonIndex() + 1) / lesson.sublessons.length) * 100}%` }}
                       ></div>
                     </div>
@@ -181,7 +194,7 @@ export default function SublessonPage({ params }: SublessonPageProps) {
               </div>
 
               {/* Sublesson Content */}
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 sm:p-6">
+              <div>
                 <SublessonComponent onComplete={() => {}} isCompleted={false} />
               </div>
 
@@ -191,7 +204,7 @@ export default function SublessonPage({ params }: SublessonPageProps) {
                   {previousSublesson && (
                     <button
                       onClick={() => router.push(`/chapter/${lessonId}/${previousSublesson.id}`)}
-                      className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-all"
+                      className="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-all border border-white/10 hover:border-white/20"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -205,7 +218,7 @@ export default function SublessonPage({ params }: SublessonPageProps) {
                   {nextSublesson ? (
                     <button
                       onClick={() => router.push(`/chapter/${lessonId}/${nextSublesson.id}`)}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-all"
+                      className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-lg shadow-lg shadow-blue-500/50 hover:shadow-blue-500/70 transition-all"
                     >
                       <span className="text-sm font-medium">Next</span>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -213,19 +226,31 @@ export default function SublessonPage({ params }: SublessonPageProps) {
                       </svg>
                     </button>
                   ) : nextLesson ? (
-                    <button
-                      onClick={() => router.push(`/chapter/${nextLesson.id}`)}
-                      className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white hover:bg-green-700 rounded-lg transition-all"
-                    >
-                      <span className="text-sm font-medium">Next</span>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
+                    canAccessNextLesson ? (
+                      <button
+                        onClick={() => router.push(`/chapter/${nextLesson.id}`)}
+                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg shadow-lg shadow-green-500/50 hover:shadow-green-500/70 transition-all"
+                      >
+                        <span className="text-sm font-medium">Next Chapter</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => router.push('/courses')}
+                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        <span className="text-sm font-medium">Unlock Full Course</span>
+                      </button>
+                    )
                   ) : (
                     <button
-                      onClick={() => router.push('/lessons')}
-                      className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white hover:bg-orange-700 rounded-lg transition-all"
+                      onClick={() => router.push('/courses')}
+                      className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 text-white rounded-lg shadow-lg shadow-orange-500/50 hover:shadow-orange-500/70 transition-all"
                     >
                       <span className="text-sm font-medium">Back to Lessons</span>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -239,24 +264,5 @@ export default function SublessonPage({ params }: SublessonPageProps) {
             </div>
           </div>
         </CourseLayout>
-      </div>
-
-      {/* Stripe Checkout Modal */}
-      <StripeCheckout
-        isOpen={checkoutOpen}
-        onClose={() => {
-          setCheckoutOpen(false);
-          // Mark that we've shown the prompt so it doesn't re-open
-          sessionStorage.setItem('hasShownPaymentPrompt', 'true');
-          setHasShownPaymentPrompt(true);
-          router.push('/chapter/1'); // Redirect to free lesson
-        }}
-        onPaymentSuccess={() => {
-          setCheckoutOpen(false);
-          // Clear the flag since they now have access
-          sessionStorage.removeItem('hasShownPaymentPrompt');
-        }}
-      />
-    </>
   );
 }

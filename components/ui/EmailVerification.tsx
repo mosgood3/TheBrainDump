@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import { useAuthActions } from '../../hooks/useAuth';
-// Backend removed - Supabase import removed
+import { supabase } from '../../lib/supabase';
 
 export default function EmailVerification() {
   const { user, loading } = useAuth();
@@ -55,8 +55,7 @@ export default function EmailVerification() {
       const checkVerification = async () => {
         setCheckingVerification(true);
         try {
-          // Backend removed - no user data to fetch
-          const { data: { user: freshUser } } = // Backend removed - auth disabled;
+          const { data: { user: freshUser } } = await supabase.auth.getUser();
           if (freshUser?.email_confirmed_at) {
             // Small delay to ensure auth state has propagated
             await new Promise(resolve => setTimeout(resolve, 500));

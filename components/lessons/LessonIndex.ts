@@ -1,31 +1,31 @@
 // Chapter imports - new numbered structure
-import Chapter01 from './chapter-01-introduction/Chapter01';
-import Chapter02 from './chapter-02-what-is-anxiety/Chapter02';
-import Chapter03 from './chapter-03-mindset-recovery/Chapter03';
-import Chapter04 from './chapter-04-conquering-thoughts/Chapter04';
-import Chapter05 from './chapter-05-accepting-sensations/Chapter05';
-import Chapter06 from './chapter-06-gradual-exposure/Chapter06';
-import Chapter07 from './chapter-07-sink-into-what-you-are/Chapter07';
+import Chapter01 from './chapter-01/Chapter01';
+import Chapter02 from './chapter-02/Chapter02';
+import Chapter03 from './chapter-03/Chapter03';
+import Chapter04 from './chapter-04/Chapter04';
+import Chapter05 from './chapter-05/Chapter05';
+import Chapter06 from './chapter-06/Chapter06';
+import Chapter07 from './chapter-07/Chapter07';
 
 // Chapter 1 Sublessons
-import { WelcomeSublesson } from './chapter-01-introduction/sublesson-01/Sublesson01';
-import { AnxietyPatternAnalyzerSublesson } from './chapter-01-introduction/sublesson-01b/AnxietyPatternAnalyzer';
-import { IndifferenceSublesson } from './chapter-01-introduction/sublesson-02/Sublesson02';
-import { ScienceBehindRecoverySublesson } from './chapter-01-introduction/sublesson-03/Sublesson03';
-import { PhysiologicalVsPsychologicalSublesson } from './chapter-01-introduction/sublesson-04/Sublesson04';
-import { AddictionLifestyleFactorsSublesson } from './chapter-01-introduction/sublesson-05/Sublesson05';
-import { InitialReflectionSublesson } from './chapter-01-introduction/sublesson-06/Sublesson06';
-import { Chapter1RecapSublesson } from './chapter-01-introduction/sublesson-07/Sublesson07';
+import { WelcomeSublesson } from './chapter-01/sublesson-01/Sublesson01';
+import { PatternAnalyzerSublesson } from './chapter-01/sublesson-01b/PatternAnalyzer';
+import { IndifferenceSublesson } from './chapter-01/sublesson-02/Sublesson02';
+import { ScienceBehindRecoverySublesson } from './chapter-01/sublesson-03/Sublesson03';
+import { PhysiologicalVsPsychologicalSublesson } from './chapter-01/sublesson-04/Sublesson04';
+import { AddictionLifestyleFactorsSublesson } from './chapter-01/sublesson-05/Sublesson05';
+import { InitialReflectionSublesson } from './chapter-01/sublesson-06/Sublesson06';
+import { Chapter1RecapSublesson } from './chapter-01/sublesson-07/Sublesson07';
 
 // Chapter 2 Sublessons
-import { WhatIsAnxietyOverviewSublesson } from './chapter-02-what-is-anxiety/sublesson-01/Sublesson01';
+import { WhatIsAnxietyOverviewSublesson } from './chapter-02/sublesson-01/Sublesson01';
 import {
   UnderstandingBasicsSublesson,
   SecondFearSublesson,
   WhatWeGetWrongSublesson,
   CognitiveBiasesSublesson,
   Chapter2RecapSublesson
-} from './WhatIsAnxietySublessons';
+} from './Chapter02Sublessons';
 
 // Chapter 3 Sublessons
 import {
@@ -35,7 +35,7 @@ import {
   NeuroplasticitySublesson,
   PatienceCompassionSublesson,
   Chapter3RecapSublesson
-} from './MindsetRecoverySublessons';
+} from './Chapter03Sublessons';
 
 // Chapter 4 Sublessons
 import {
@@ -46,7 +46,7 @@ import {
   MeditationPracticeSublesson,
   DismantlingAnxiousThoughtsSublesson,
   Chapter4RecapSublesson
-} from './ConqueringThoughtsSublessons';
+} from './Chapter04Sublessons';
 import {
   AcceptingSensationsOverviewSublesson,
   PhysicalSymptomsSublesson,
@@ -54,18 +54,18 @@ import {
   ChangingResponseSublesson,
   AcceptanceBeyondAnxietySublesson,
   Chapter5RecapSublesson
-} from './AcceptingSensationsSublessons';
+} from './Chapter05Sublessons';
 import {
   GradualExposureOverviewSublesson,
   ScienceOfExposureSublesson,
   InteractiveExposurePlanningSublesson,
   CommonMistakesSublesson,
   Chapter6RecapSublesson
-} from './GradualExposureSublessons';
-import { SinkIntoWhatYouAreOverviewSublesson, CourseReviewSublesson, QuotesToLiveBySublesson, FinalMessageSublesson } from './SinkIntoWhatYouAreSublessons';
+} from './Chapter06Sublessons';
+import { SinkIntoWhatYouAreOverviewSublesson, CourseReviewSublesson, QuotesToLiveBySublesson, FinalMessageSublesson } from './Chapter07Sublessons';
 
 // Chapter 7 Sublessons
-import { AdditionalReadingSublesson } from './chapter-07-sink-into-what-you-are/sublesson-05/Sublesson05';
+import { AdditionalReadingSublesson } from './chapter-07/sublesson-05/Sublesson05';
 
 export interface SublessonInfo {
   id: string;
@@ -90,343 +90,284 @@ export interface LessonInfo {
 export const lessons: LessonInfo[] = [
   {
     id: 1,
-    title: 'Introduction',
-    description: 'Welcome to your anxiety recovery journey',
-    estimatedDuration: 15,
-    category: 'Foundation',
+    title: 'Setup: Get Your Tools Ready',
+    description: 'Learn about the tech stack and set up your development environment',
+    estimatedDuration: 30,
+    category: 'Setup',
     difficulty: 'beginner',
     component: Chapter01,
     prerequisites: [],
     sublessons: [
       {
-        id: 'welcome',
-        title: 'Welcome',
-        icon: '',
+        id: 'introduction',
+        title: 'Introduction',
+        icon: '👋',
         component: WelcomeSublesson
       },
       {
-        id: 'anxiety-pattern-analyzer',
-        title: 'Initial Anxiety Assessment',
-        icon: '🧠',
-        component: AnxietyPatternAnalyzerSublesson,
-        hasAI: true
-      },
-      {
-        id: 'indifference',
-        title: 'Indifference',
-        icon: '',
+        id: 'getting-set-up',
+        title: 'Getting Set Up',
+        icon: '⚙️',
         component: IndifferenceSublesson
       },
       {
-        id: 'science-behind-recovery',
-        title: 'Science Behind Recovery',
-        icon: '',
+        id: 'installing-node',
+        title: 'Installing Node.js',
+        icon: '📦',
         component: ScienceBehindRecoverySublesson
       },
       {
-        id: 'physical-vs-mental',
-        title: 'Physical vs Mental',
-        icon: '',
+        id: 'installing-vscode',
+        title: 'Installing VS Code',
+        icon: '💻',
         component: PhysiologicalVsPsychologicalSublesson
       },
       {
-        id: 'lifestyle-factors',
-        title: 'Lifestyle Factors',
-        icon: '',
+        id: 'git-github-setup',
+        title: 'Git & GitHub Setup',
+        icon: '🌿',
         component: AddictionLifestyleFactorsSublesson
       },
       {
         id: 'chapter-recap',
         title: 'Chapter Recap',
-        icon: '',
+        icon: '📚',
         component: Chapter1RecapSublesson
       }
     ]
   },
   {
     id: 2,
-    title: 'What is Anxiety',
-    description: 'Understanding the root causes and mechanisms of anxiety',
-    estimatedDuration: 25,
-    category: 'Understanding',
-    difficulty: 'beginner',
-    component: Chapter02,
-    prerequisites: [],
-    sublessons: [
-      {
-        id: 'overview',
-        title: 'Video Overview',
-        icon: '',
-        component: WhatIsAnxietyOverviewSublesson
-      },
-      {
-        id: 'anxiety-explained',
-        title: 'What Is Anxiety',
-        icon: '',
-        component: UnderstandingBasicsSublesson
-      },
-      {
-        id: 'second-fear',
-        title: 'Second Fear',
-        icon: '',
-        component: SecondFearSublesson,
-        hasAI: true
-      },
-      {
-        id: 'what-we-get-wrong',
-        title: 'Anxiety Misconceptions',
-        icon: '',
-        component: WhatWeGetWrongSublesson
-      },
-      {
-        id: 'cognitive-biases',
-        title: 'Cognitive Biases',
-        icon: '',
-        component: CognitiveBiasesSublesson,
-        hasAI: true
-      },
-      {
-        id: 'chapter-recap',
-        title: 'Chapter Recap',
-        icon: '',
-        component: Chapter2RecapSublesson
-      }
-    ]
-  },
-  {
-    id: 3,
-    title: 'Mindset for Recovery',
-    description: 'Developing the mental framework for lasting anxiety recovery',
-    estimatedDuration: 20,
-    category: 'Mindset',
-    difficulty: 'intermediate',
-    component: Chapter03,
-    prerequisites: [1, 2],
-    sublessons: [
-      {
-        id: 'overview',
-        title: 'Video Overview',
-        icon: '',
-        component: MindsetRecoveryOverviewSublesson
-      },
-      {
-        id: 'nonlinear-recovery',
-        title: 'Nonlinear Recovery',
-        icon: '',
-        component: NonlinearRecoverySublesson
-      },
-      {
-        id: 'tenacity',
-        title: 'Tenacity in Recovery',
-        icon: '',
-        component: TenacityRecoverySublesson
-      },
-      {
-        id: 'neuroplasticity',
-        title: 'Neuroplasticity',
-        icon: '',
-        component: NeuroplasticitySublesson
-      },
-      {
-        id: 'patience-compassion',
-        title: 'Patience & Self-Compassion',
-        icon: '',
-        component: PatienceCompassionSublesson
-      },
-      {
-        id: 'chapter-recap',
-        title: 'Chapter Recap',
-        icon: '',
-        component: Chapter3RecapSublesson
-      }
-    ]
-  },
-  {
-    id: 4,
-    title: 'Conquering Thoughts',
-    description: 'Learning to master your relationship with thoughts and thinking',
-    estimatedDuration: 30,
-    category: 'Cognitive',
+    title: 'Prompt Engineering: Build with AI',
+    description: 'Learn to integrate AI capabilities into your application',
+    estimatedDuration: 40,
+    category: 'AI',
     difficulty: 'intermediate',
     component: Chapter04,
-    prerequisites: [1, 2, 3],
+    prerequisites: [1],
     sublessons: [
       {
         id: 'overview',
-        title: 'Video Overview',
-        icon: '',
+        title: 'AI Integration Overview',
+        icon: '🤖',
         component: ConqueringThoughtsOverviewSublesson
       },
       {
-        id: 'scout-metaphor',
-        title: 'Introducing Scout',
-        icon: '',
+        id: 'prompt-basics',
+        title: 'Prompt Engineering Basics',
+        icon: '💬',
         component: ScoutMetaphorSublesson
       },
       {
-        id: 'how-thoughts-work',
-        title: 'Thoughts vs. Thinking',
-        icon: '',
+        id: 'openai-setup',
+        title: 'Setting Up OpenAI API',
+        icon: '🔑',
         component: HowThoughtsWorkSublesson
       },
       {
-        id: 'master-observer',
-        title: 'Master the Observer',
-        icon: '',
+        id: 'building-ai-features',
+        title: 'Building AI Features',
+        icon: '✨',
         component: MasterObserverSublesson,
         hasAI: true
       },
       {
-        id: 'meditation-practice',
-        title: 'Meditation Practice',
-        icon: '',
+        id: 'best-practices',
+        title: 'AI Best Practices',
+        icon: '⭐',
         component: MeditationPracticeSublesson
-      },
-      {
-        id: 'dismantling-anxious-thoughts',
-        title: 'Common Themes',
-        icon: '',
-        component: DismantlingAnxiousThoughtsSublesson
       },
       {
         id: 'chapter-recap',
         title: 'Chapter Recap',
-        icon: '',
+        icon: '📚',
         component: Chapter4RecapSublesson
       }
     ]
   },
   {
-    id: 5,
-    title: 'Accepting Sensations',
-    description: 'Learning to coexist peacefully with physical anxiety symptoms',
-    estimatedDuration: 25,
-    category: 'Physical',
-    difficulty: 'intermediate',
-    component: Chapter05,
-    prerequisites: [1, 2, 3],
+    id: 3,
+    title: 'Frontend: Build Beautiful UIs',
+    description: 'Build beautiful, responsive user interfaces with React and Next.js',
+    estimatedDuration: 45,
+    category: 'Frontend',
+    difficulty: 'beginner',
+    component: Chapter02,
+    prerequisites: [1],
     sublessons: [
       {
         id: 'overview',
-        title: 'Video Overview',
-        icon: '',
+        title: 'Next.js Overview',
+        icon: '⚡',
+        component: WhatIsAnxietyOverviewSublesson
+      },
+      {
+        id: 'react-basics',
+        title: 'React Basics',
+        icon: '⚛️',
+        component: UnderstandingBasicsSublesson
+      },
+      {
+        id: 'components-props',
+        title: 'Components & Props',
+        icon: '🧩',
+        component: SecondFearSublesson
+      },
+      {
+        id: 'routing-navigation',
+        title: 'Routing & Navigation',
+        icon: '🧭',
+        component: WhatWeGetWrongSublesson
+      },
+      {
+        id: 'styling-tailwind',
+        title: 'Styling with Tailwind CSS',
+        icon: '🎨',
+        component: CognitiveBiasesSublesson
+      },
+      {
+        id: 'chapter-recap',
+        title: 'Chapter Recap',
+        icon: '📚',
+        component: Chapter2RecapSublesson
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: 'Backend: Power Your App with Data',
+    description: 'Master APIs and Supabase for powerful backend functionality',
+    estimatedDuration: 50,
+    category: 'Backend',
+    difficulty: 'intermediate',
+    component: Chapter03,
+    prerequisites: [1, 3],
+    sublessons: [
+      {
+        id: 'overview',
+        title: 'Backend Overview',
+        icon: '🔧',
+        component: MindsetRecoveryOverviewSublesson
+      },
+      {
+        id: 'supabase-intro',
+        title: 'Introduction to Supabase',
+        icon: '🚀',
+        component: NonlinearRecoverySublesson
+      },
+      {
+        id: 'database-setup',
+        title: 'Setting Up Your Database',
+        icon: '🗄️',
+        component: TenacityRecoverySublesson
+      },
+      {
+        id: 'api-routes',
+        title: 'Creating API Routes',
+        icon: '🔌',
+        component: NeuroplasticitySublesson
+      },
+      {
+        id: 'authentication',
+        title: 'User Authentication',
+        icon: '🔐',
+        component: PatienceCompassionSublesson
+      },
+      {
+        id: 'chapter-recap',
+        title: 'Chapter Recap',
+        icon: '📚',
+        component: Chapter3RecapSublesson
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: 'Payments: Monetize Your App',
+    description: 'Implement secure payment processing with Stripe',
+    estimatedDuration: 45,
+    category: 'Payments',
+    difficulty: 'intermediate',
+    component: Chapter05,
+    prerequisites: [1, 3, 4],
+    sublessons: [
+      {
+        id: 'overview',
+        title: 'Payments Overview',
+        icon: '💳',
         component: AcceptingSensationsOverviewSublesson
       },
       {
-        id: 'physical-symptoms',
-        title: 'Physical Symptoms',
-        icon: '',
+        id: 'stripe-setup',
+        title: 'Setting Up Stripe',
+        icon: '🔵',
         component: PhysicalSymptomsSublesson
       },
       {
-        id: 'fear-of-sensations',
-        title: 'Fear of Sensations',
-        icon: '',
+        id: 'checkout-flow',
+        title: 'Building Checkout Flow',
+        icon: '🛒',
         component: FearOfSensationsSublesson
       },
       {
-        id: 'changing-response',
-        title: 'Changing Your Response',
-        icon: '',
-        component: ChangingResponseSublesson,
-        hasAI: true
+        id: 'webhooks',
+        title: 'Stripe Webhooks',
+        icon: '🔔',
+        component: ChangingResponseSublesson
       },
       {
-        id: 'acceptance-beyond-anxiety',
-        title: 'Acceptance Beyond Anxiety',
-        icon: '',
+        id: 'subscriptions',
+        title: 'Managing Subscriptions',
+        icon: '🔄',
         component: AcceptanceBeyondAnxietySublesson
       },
       {
         id: 'chapter-recap',
         title: 'Chapter Recap',
-        icon: '',
+        icon: '📚',
         component: Chapter5RecapSublesson
       }
     ]
   },
   {
     id: 6,
-    title: 'Gradual Exposure',
-    description: 'Systematically facing your fears to reduce their power',
+    title: 'Launch: Go Live with Vercel',
+    description: 'Launch your application to production with Vercel',
     estimatedDuration: 35,
-    category: 'Behavioral',
-    difficulty: 'advanced',
+    category: 'Deployment',
+    difficulty: 'beginner',
     component: Chapter06,
     prerequisites: [1, 2, 3, 4, 5],
     sublessons: [
       {
-        id: 'what-is-gradual-exposure',
-        title: 'Video Overview',
-        icon: '🎯',
+        id: 'overview',
+        title: 'Deployment Overview',
+        icon: '🚀',
         component: GradualExposureOverviewSublesson
       },
       {
-        id: 'how-exposure-works',
-        title: 'How Exposure Works',
-        icon: '🔄',
+        id: 'vercel-setup',
+        title: 'Setting Up Vercel',
+        icon: '▲',
         component: ScienceOfExposureSublesson
       },
       {
-        id: 'plan-your-exposure',
-        title: 'Plan Your Exposure Journey',
-        icon: '🎯',
-        component: InteractiveExposurePlanningSublesson,
-        hasAI: true
+        id: 'environment-variables',
+        title: 'Environment Variables',
+        icon: '🔐',
+        component: InteractiveExposurePlanningSublesson
       },
       {
-        id: 'common-mistakes',
-        title: 'Common Exposure Mistakes',
-        icon: '⚠️',
+        id: 'custom-domain',
+        title: 'Custom Domain Setup',
+        icon: '🌐',
         component: CommonMistakesSublesson
       },
       {
-        id: 'chapter-recap',
-        title: 'Chapter Recap',
-        icon: '📚',
+        id: 'final-thoughts',
+        title: 'Final Thoughts & Next Steps',
+        icon: '🎉',
         component: Chapter6RecapSublesson
-      }
-    ]
-  },
-  {
-    id: 7,
-    title: 'Beyond This Course',
-    description: 'Embracing your true self beyond anxiety and building lasting resilience',
-    estimatedDuration: 30,
-    category: 'Closing',
-    difficulty: 'advanced',
-    component: Chapter07,
-    prerequisites: [1, 2, 3, 4, 5, 6],
-    sublessons: [
-      {
-        id: 'course-takeaways',
-        title: 'Video Overview',
-        icon: '',
-        component: SinkIntoWhatYouAreOverviewSublesson
-      },
-      {
-        id: 'additional-reading',
-        title: 'Additional Reading',
-        icon: '',
-        component: AdditionalReadingSublesson
-      },
-      {
-        id: 'course-review',
-        title: 'Course Review',
-        icon: '',
-        component: CourseReviewSublesson
-      },
-      {
-        id: 'quotes-to-live-by',
-        title: 'Quotes to Live By',
-        icon: '',
-        component: QuotesToLiveBySublesson
-      },
-      {
-        id: 'final-message',
-        title: 'Final Message',
-        icon: '',
-        component: FinalMessageSublesson
       }
     ]
   }

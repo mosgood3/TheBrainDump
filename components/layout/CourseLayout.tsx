@@ -4,53 +4,75 @@ import React, { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useProgress } from '../../context/ProgressContext';
 import { useAuth } from '../../context/AuthContext';
-import StripeCheckout from '../ui/StripeCheckout';
 import { CourseSidebar } from './course-layout/CourseSidebar';
 import { CourseHeader } from './course-layout/CourseHeader';
+import StripeCheckout from '../ui/StripeCheckout';
+import { getCourseBySlug, isLessonFree } from '../courses/CourseIndex';
 
 interface CourseLayoutProps {
   children: React.ReactNode;
+  courseSlug?: string;
 }
 
-export default function CourseLayout({ children }: CourseLayoutProps) {
+export default function CourseLayout({ children, courseSlug: propCourseSlug }: CourseLayoutProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [expandedLessons, setExpandedLessons] = useState<Set<number>>(new Set());
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [expandedLessons, setExpandedLessons] = useState<Set<number>>(new Set());
 
   // Use progress context for real data
   const { hasCompletedAssessment } = useProgress();
-  const { isPaid } = useAuth();
+  const { hasCourseAccess } = useAuth();
+
+  // Parse course slug from pathname if not provided as prop
+  const getCourseSlugFromPath = (): string => {
+    // Check for new /course/[slug]/... pattern
+    const courseMatch = pathname.match(/^\/course\/([^\/]+)/);
+    if (courseMatch) {
+      return courseMatch[1];
+    }
+    // Fallback to brain-dump for legacy /chapter/... routes
+    return 'brain-dump';
+  };
+
+  const courseSlug = propCourseSlug || getCourseSlugFromPath();
+  const course = getCourseBySlug(courseSlug);
 
   // Parse current lesson and sublesson from pathname
   const getCurrentLessonAndSublesson = () => {
-    const currentSection = pathname.startsWith('/chapter') ? 'chapter' : 
-                          pathname.startsWith('/assessment') ? 'assessment' : 'home';
-    
-    if (currentSection === 'chapter') {
-      const pathParts = pathname.split('/');
-      const lessonId = parseInt(pathParts[2]);
-      const sublessonId = pathParts[3] || null;
+    // Handle new /course/[slug]/chapter/[id] pattern
+    const courseChapterMatch = pathname.match(/^\/course\/[^\/]+\/chapter\/(\d+)(?:\/(.+))?/);
+    if (courseChapterMatch) {
+      const lessonId = parseInt(courseChapterMatch[1]);
+      const sublessonId = courseChapterMatch[2] || null;
       return { lessonId, sublessonId };
     }
+
+    // Handle legacy /chapter/[id] pattern
+    const legacyChapterMatch = pathname.match(/^\/chapter\/(\d+)(?:\/(.+))?/);
+    if (legacyChapterMatch) {
+      const lessonId = parseInt(legacyChapterMatch[1]);
+      const sublessonId = legacyChapterMatch[2] || null;
+      return { lessonId, sublessonId };
+    }
+
     return { lessonId: null, sublessonId: null };
   };
 
   const { lessonId: currentLessonId, sublessonId: currentSublessonId } = getCurrentLessonAndSublesson();
 
-  // Note: Removed auto-expansion to keep introduction collapsed on first login
-
   const handleNavigation = (path: string) => {
-    if (path.startsWith('/chapter')) {
-      // Extract lesson ID from path to check access requirements
-      const lessonIdMatch = path.match(/\/chapter\/(\d+)/);
-      const lessonId = lessonIdMatch ? parseInt(lessonIdMatch[1]) : null;
+    // Extract lesson ID from path
+    const lessonIdMatch = path.match(/\/chapter\/(\d+)/);
+    const lessonId = lessonIdMatch ? parseInt(lessonIdMatch[1]) : null;
 
-      // Allow navigation based on lesson access rules:
-      // - Lessons 1 and 2: Free for all users
-      // - Lessons 3-7: Require completed assessment AND payment
-      if (lessonId === 1 || lessonId === 2 || (hasCompletedAssessment() && isPaid)) {
+    if (lessonId !== null) {
+      // Check if lesson is free or user has course access
+      const isFree = isLessonFree(courseSlug, lessonId);
+      const hasAccess = isFree || hasCourseAccess(courseSlug);
+
+      if (hasAccess || (hasCompletedAssessment() && hasCourseAccess(courseSlug))) {
         router.push(path);
         setSidebarOpen(false);
       }
@@ -68,19 +90,26 @@ export default function CourseLayout({ children }: CourseLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 overflow-hidden">
-      {/* Flowing Background Elements */}
-      <div className="absolute inset-0 opacity-70">
-        <div className="absolute top-10 left-10 w-96 h-96 bg-gradient-to-br from-blue-400/70 to-blue-500/40 rounded-full blur-3xl"></div>
-        <div className="absolute top-20 right-20 w-80 h-80 bg-gradient-to-br from-orange-400/70 to-orange-500/40 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-1/4 w-72 h-72 bg-gradient-to-br from-blue-500/60 to-blue-600/35 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-10 right-1/3 w-64 h-64 bg-gradient-to-br from-orange-500/60 to-orange-600/35 rounded-full blur-2xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-56 h-56 bg-gradient-to-br from-blue-400/50 to-orange-400/50 rounded-full blur-3xl"></div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900 overflow-hidden">
+      {/* Animated Background Grid */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)',
+          backgroundSize: '50px 50px'
+        }}></div>
+      </div>
+
+      {/* Floating Orbs */}
+      <div className="absolute inset-0 opacity-30 overflow-visible">
+        <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-orange-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
       </div>
 
       <div className="relative z-10 min-h-screen flex">
         {/* Left Sidebar Navigation */}
         <CourseSidebar
+          courseSlug={courseSlug}
           sidebarOpen={sidebarOpen}
           onCloseSidebar={() => setSidebarOpen(false)}
           currentLessonId={currentLessonId}
@@ -93,8 +122,8 @@ export default function CourseLayout({ children }: CourseLayoutProps) {
 
         {/* Mobile Sidebar Overlay */}
         {sidebarOpen && (
-          <div 
-            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          <div
+            className="fixed top-[61px] bottom-0 left-0 right-0 bg-black/50 z-40 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           ></div>
         )}
@@ -114,9 +143,15 @@ export default function CourseLayout({ children }: CourseLayoutProps) {
       </div>
 
       {/* Stripe Checkout Modal */}
-      <StripeCheckout 
-        isOpen={checkoutOpen} 
-        onClose={() => setCheckoutOpen(false)} 
+      <StripeCheckout
+        isOpen={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        courseSlug={courseSlug}
+        onPaymentSuccess={() => {
+          setCheckoutOpen(false);
+          // Reload to update course access status
+          window.location.reload();
+        }}
       />
     </div>
   );

@@ -14,32 +14,33 @@ export interface AuthContextType {
 }
 
 export interface AssessmentFormData {
-  // Step 1 fields
+  // Step 1: Background & Experience
   planName: string;
   primaryFocus: string;
-  anxietyLevel: number;
-  anxietyTypes: string[];
-  
-  // Step 2: Describe Experience
-  physicalSymptoms: string;
-  anxiousThoughts: string;
-  anxiousBehaviors: string;
-  
-  // Step 3: Identify Triggers  
-  mainTriggers: string;
-  avoidancePatterns: string;
-  fearOfAnxietyResponse: boolean;
-  
-  // Step 4: Life Impact
-  lifeImpact: string;
-  enjoyableActivities: string;
-  
-  // Step 5: Current Coping
-  currentCoping: string;
-  
-  // Step 6: Recovery Goals
-  mainGoals: string;
-  
+  experienceLevel: number; // 0-10 scale of technical experience
+  interests: string[]; // Types of apps they want to build
+
+  // Step 2: Current Skills
+  currentSkills: string; // What they already know
+  learningStyle: string; // How they prefer to learn
+  timeCommitment: string; // How much time they can dedicate
+
+  // Step 3: Goals & Aspirations
+  appIdeas: string; // What they want to build
+  careerGoals: string; // Career aspirations
+  mainMotivation: string; // Why they want to learn
+
+  // Step 4: Challenges & Concerns
+  concerns: string; // What worries them about learning
+  pastAttempts: string; // Previous learning attempts
+
+  // Step 5: Learning Preferences
+  preferredPace: string; // Fast, moderate, slow
+  supportNeeds: string; // What kind of help they need
+
+  // Step 6: Building Goals
+  mainGoals: string; // What they want to achieve
+
   // Legacy fields (keep for backward compatibility)
   anxietyDescription: string;
   triggers: string[];
@@ -55,6 +56,17 @@ export interface AssessmentFormData {
   previousTherapy: string;
   medication: string;
   timeline: string;
+  anxietyLevel: number;
+  anxietyTypes: string[];
+  physicalSymptoms: string;
+  anxiousThoughts: string;
+  anxiousBehaviors: string;
+  mainTriggers: string;
+  avoidancePatterns: string;
+  fearOfAnxietyResponse: boolean;
+  lifeImpact: string;
+  enjoyableActivities: string;
+  currentCoping: string;
 }
 
 export interface AssessmentStep {

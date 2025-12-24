@@ -3,9 +3,10 @@
 import React from 'react';
 import { useProgress } from '../../../context/ProgressContext';
 import { useAuth } from '../../../context/AuthContext';
-import { lessons } from '../../lessons/LessonIndex';
+import { getPaidLessons, getCourseBySlug } from '../../courses/CourseIndex';
 
 interface PaidLessonsSectionProps {
+  courseSlug: string;
   currentLessonId: number | null;
   currentSublessonId: string | null;
   expandedLessons: Set<number>;
@@ -14,6 +15,7 @@ interface PaidLessonsSectionProps {
 }
 
 export function PaidLessonsSection({
+  courseSlug,
   currentLessonId,
   currentSublessonId,
   expandedLessons,
@@ -25,23 +27,31 @@ export function PaidLessonsSection({
     hasCompletedAssessment
   } = useProgress();
 
-  const { isPaid } = useAuth();
+  const { hasCourseAccess } = useAuth();
+  const paidLessons = getPaidLessons(courseSlug);
+  const course = getCourseBySlug(courseSlug);
+  const hasAccess = hasCourseAccess(courseSlug);
+
+  // Filter out the last lesson (closing section handles it)
+  const coreLessons = paidLessons.filter(lesson =>
+    course ? lesson.id < course.lessons.length : lesson.id < 6
+  );
 
   return (
-    <div className="px-6 py-5 border-b border-gray-100">
+    <div className="px-6 py-5 border-b border-white/10">
       {/* Section Header */}
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Core Lessons</h3>
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Core Lessons</h3>
         <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-          <span className="text-xs font-medium text-blue-700">Premium Content</span>
+          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+          <span className="text-xs font-medium text-blue-400">Premium Content</span>
         </div>
       </div>
 
       {/* Lessons */}
       <nav className="space-y-4">
-        {lessons.filter(lesson => lesson.id !== 1 && lesson.id !== 2 && lesson.id !== 7).map((lesson) => {
-          const isLocked = !hasCompletedAssessment() || !isPaid;
+        {coreLessons.map((lesson) => {
+          const isLocked = !hasCompletedAssessment() || !hasAccess;
           const isCurrentLesson = currentLessonId === lesson.id;
           const lessonCompleted = isLessonCompleted(lesson.id);
           const isExpanded = expandedLessons.has(lesson.id);
@@ -54,27 +64,27 @@ export function PaidLessonsSection({
                   if (lesson.sublessons && lesson.sublessons.length > 0 && !isLocked) {
                     onToggleLessonExpanded(lesson.id);
                   } else {
-                    onNavigation(`/chapter/${lesson.id}`);
+                    onNavigation(`/course/${courseSlug}/chapter/${lesson.id}`);
                   }
                 }}
                 disabled={isLocked}
                 className={`w-full flex items-center p-3 rounded-lg text-left transition-all group ${
                   isCurrentLesson
-                    ? 'bg-blue-50 border-2 border-blue-200 shadow-sm'
+                    ? 'bg-blue-500/20 border-2 border-blue-500/50 shadow-lg shadow-blue-500/20'
                     : isLocked
-                      ? 'bg-gray-50 border border-gray-200 opacity-60 cursor-not-allowed'
-                      : 'bg-gray-50 border border-gray-200 hover:bg-gray-100 hover:border-gray-300'
+                      ? 'bg-white/5 border border-white/10 opacity-60 cursor-not-allowed'
+                      : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
                 }`}
               >
                 {/* Lesson Number/Status Icon */}
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0 ${
                   isCurrentLesson
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50'
                     : isLocked
-                      ? 'bg-gray-300 text-gray-500'
+                      ? 'bg-gray-600 text-gray-400'
                       : lessonCompleted
-                        ? 'bg-green-500 text-white'
-                        : 'bg-white text-gray-600 border border-gray-300'
+                        ? 'bg-green-500 text-white shadow-lg shadow-green-500/50'
+                        : 'bg-white/10 text-gray-300 border border-white/20'
                 }`}>
                   {isLocked ? (
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -92,12 +102,12 @@ export function PaidLessonsSection({
                 {/* Lesson Content */}
                 <div className="min-w-0 flex-1">
                   <div className={`font-semibold text-sm mb-1 ${
-                    isCurrentLesson ? 'text-blue-900' : isLocked ? 'text-gray-500' : 'text-gray-900'
+                    isCurrentLesson ? 'text-blue-300' : isLocked ? 'text-gray-500' : 'text-white'
                   }`}>
                     {lesson.title}
                   </div>
                   <div className={`text-xs ${
-                    isCurrentLesson ? 'text-blue-600' : isLocked ? 'text-gray-400' : 'text-gray-500'
+                    isCurrentLesson ? 'text-blue-400' : isLocked ? 'text-gray-500' : 'text-gray-400'
                   }`}>
                     {lesson.sublessons?.length || 0} parts
                     {isLocked ? ' • Locked' : ''}
@@ -107,7 +117,7 @@ export function PaidLessonsSection({
                 {/* Expand Arrow */}
                 {lesson.sublessons && lesson.sublessons.length > 0 && !isLocked && (
                   <div className={`transition-transform ${isExpanded ? 'rotate-90' : ''}`}>
-                    <svg className={`w-4 h-4 ${isCurrentLesson ? 'text-blue-600' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className={`w-4 h-4 ${isCurrentLesson ? 'text-blue-400' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -125,15 +135,15 @@ export function PaidLessonsSection({
                       <div key={sublesson.id} className="relative">
                         {/* Connection Line */}
                         {index > 0 && (
-                          <div className="absolute left-2 -top-1.5 w-px h-3 bg-gray-200"></div>
+                          <div className="absolute left-2 -top-1.5 w-px h-3 bg-white/20"></div>
                         )}
 
                         <button
-                          onClick={() => onNavigation(`/chapter/${lesson.id}/${sublesson.id}`)}
+                          onClick={() => onNavigation(`/course/${courseSlug}/chapter/${lesson.id}/${sublesson.id}`)}
                           className={`w-full flex items-center p-2.5 rounded-md text-left transition-all ${
                             isCurrentSublesson
-                              ? 'bg-blue-100 border border-blue-200'
-                              : 'bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                              ? 'bg-blue-500/20 border border-blue-500/50'
+                              : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
                           }`}
                         >
                           {/* Progress Indicator */}
@@ -142,7 +152,7 @@ export function PaidLessonsSection({
                               ? 'bg-blue-600 text-white border-blue-600'
                               : isSublessonCompleted
                                 ? 'bg-green-500 text-white border-green-500'
-                                : 'bg-white text-gray-400 border-gray-300'
+                                : 'bg-white/10 text-gray-400 border-white/20'
                           }`}>
                             {/* AI Indicator - Purple dot for AI lessons */}
                             {sublesson.hasAI && (
@@ -162,7 +172,7 @@ export function PaidLessonsSection({
                           {/* Sublesson Title */}
                           <div className="min-w-0 flex-1">
                             <div className={`font-medium text-xs truncate ${
-                              isCurrentSublesson ? 'text-blue-900' : 'text-gray-700'
+                              isCurrentSublesson ? 'text-blue-300' : 'text-gray-300'
                             }`}>
                               {sublesson.title}
                             </div>

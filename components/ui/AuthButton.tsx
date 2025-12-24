@@ -27,14 +27,14 @@ export default function AuthButton({ onClick, icon, text, disabled }: AuthButton
     <button
       onClick={handleClick}
       disabled={disabled || loading}
-      className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+      className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white/10 border border-white/20 rounded-lg hover:bg-white/15 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm backdrop-blur-sm"
     >
       {loading ? (
-        <div className="w-5 h-5 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+        <div className="w-5 h-5 border-2 border-gray-300 border-t-white rounded-full animate-spin" />
       ) : (
         icon
       )}
-      <span className="font-medium text-gray-700">{text}</span>
+      <span className="font-medium text-white">{text}</span>
     </button>
   );
 }

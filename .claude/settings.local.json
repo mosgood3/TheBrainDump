@@ -28,7 +28,6 @@
       "Bash(for component in \"CourseHeader\" \"AssessmentSection\" \"FreeLessonSection\" \"PaidLessonsSection\")",
       "Bash(do echo \"=== $component ===\")",
       "Bash(npx next lint:*)",
-      
       "mcp__ide__getDiagnostics",
       "Read(//c/**)",
       "Bash(dir:*)",
@@ -37,7 +36,10 @@
       "Bash(git commit:*)",
       "Bash(xargs:*)",
       "Bash(cat:*)",
-      "Bash(claude mcp:*)"
+      "Bash(claude mcp:*)",
+      "Bash(findstr:*)",
+      "Bash(npm audit fix:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": [],

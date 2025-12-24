@@ -1,114 +1,112 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 
-export default function CharacterIntro() {
+export default function WhatYouWillLearn() {
+  const sections = [
+    {
+      emoji: "🛠️",
+      title: "Introduction to the Stack",
+      subtitle: "Setting Up Your Environment",
+      gradient: "from-blue-500 to-blue-600",
+      description: "Install all necessary software and understand the tools you'll be using throughout the course"
+    },
+    {
+      emoji: "⚛️",
+      title: "Front-End",
+      subtitle: "Building with Next.js",
+      gradient: "from-cyan-500 to-blue-600",
+      description: "Create beautiful, responsive user interfaces with React and Next.js framework"
+    },
+    {
+      emoji: "🗄️",
+      title: "The Back-End",
+      subtitle: "APIs and Supabase",
+      gradient: "from-green-500 to-emerald-600",
+      description: "Build RESTful APIs and integrate Supabase for database, auth, and real-time features"
+    },
+    {
+      emoji: "🤖",
+      title: "Prompt Engineering",
+      subtitle: "AI-Powered Development",
+      gradient: "from-purple-500 to-pink-600",
+      description: "Learn to leverage AI tools like Claude and ChatGPT to accelerate your development"
+    },
+    {
+      emoji: "💳",
+      title: "Taking Payments",
+      subtitle: "Stripe Integration",
+      gradient: "from-indigo-500 to-purple-600",
+      description: "Implement secure payment processing with Stripe for one-time and subscription payments"
+    },
+    {
+      emoji: "🚀",
+      title: "Deploy Your App",
+      subtitle: "Going Live with Vercel",
+      gradient: "from-orange-500 to-red-600",
+      description: "Launch your application to production with Vercel and make it accessible worldwide"
+    }
+  ];
+
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-400/50 to-blue-500/30 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-indigo-400/50 to-purple-500/30 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-br from-blue-300/40 to-indigo-400/30 rounded-full blur-2xl"></div>
+    <section id="learn" className="py-20 relative overflow-hidden border-t border-white/5">
+      {/* Background Elements - Extended for smooth transitions */}
+      <div className="absolute inset-0 opacity-20 overflow-visible">
+        {/* Orbs that blend with WhatYoullBuild section above */}
+        <div className="absolute -top-40 left-1/4 w-72 h-72 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute -top-32 right-1/3 w-64 h-64 bg-orange-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+
+        {/* Middle orbs */}
+        <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3s'}}></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-orange-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2.5s'}}></div>
+
+        {/* Orbs that extend into Pricing section below */}
+        <div className="absolute -bottom-32 left-1/3 w-80 h-80 bg-purple-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1.5s'}}></div>
+        <div className="absolute -bottom-40 right-1/4 w-72 h-72 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3.5s'}}></div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-16 h-16 mb-6 bg-gradient-to-br from-blue-500 via-purple-500 to-orange-500 rounded-xl shadow-lg shadow-blue-500/50">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
           <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-            <span className="text-gray-900">I've Been Where</span>{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">You Are</span>
+            <span className="text-white">What You'll</span>{' '}
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-orange-400 bg-clip-text text-transparent">Learn</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            10 years of struggling with anxiety, and the journey to complete recovery
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            A step-by-step journey from setup to deployment, covering everything you need to build modern web applications
           </p>
         </div>
 
-        {/* Main Card */}
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
-
-            {/* Card Content */}
-            <div className="grid md:grid-cols-5 gap-8 p-8 md:p-12">
-
-              {/* Left Side - Image */}
-              <div className="md:col-span-2 flex flex-col items-center justify-center">
-                <div className="w-56 h-56 mx-auto rounded-full bg-gradient-to-br from-blue-50 to-indigo-100 shadow-xl p-6 relative overflow-hidden group">
-                  <Image
-                    src="/images/Home/sam.png"
-                    alt="Sam - Your Guide"
-                    width={256}
-                    height={256}
-                    className="w-full h-full object-contain relative z-10 transform group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-indigo-400/10 group-hover:from-blue-400/20 group-hover:to-indigo-400/20 transition-all duration-500"></div>
+        {/* Sections Grid */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {sections.map((section, index) => (
+            <div
+              key={index}
+              className="bg-white/5 backdrop-blur-lg rounded-2xl shadow-xl shadow-blue-500/10 border border-white/10 p-6 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 hover:-translate-y-1 group"
+            >
+              {/* Section Emoji Badge */}
+              <div className="flex items-center gap-4 mb-4">
+                <div className={`w-14 h-14 bg-gradient-to-br ${section.gradient} rounded-xl flex items-center justify-center shadow-lg`}>
+                  <span className="text-3xl">{section.emoji}</span>
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mt-6 mb-2">Sam</h3>
-                <p className="text-blue-700 font-semibold text-lg">Your Recovery Guide</p>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-white">{section.title}</h3>
+                  <p className="text-xs text-gray-400">{section.subtitle}</p>
+                </div>
               </div>
 
-              {/* Right Side - Content */}
-              <div className="md:col-span-3 flex flex-col justify-center">
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-700 text-lg">10 years of lived experience with severe anxiety and panic attacks</p>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-700 text-lg">Fully recovered through dedicated self-study and practice</p>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-700 text-lg">Deep knowledge of ACT, CBT, and mindfulness-based approaches</p>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-700 text-lg">Passionate about helping others find their path to freedom</p>
-                  </div>
-                </div>
-
-                {/* Quote */}
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border-l-4 border-blue-500 mb-6">
-                  <p className="text-gray-800 text-lg italic leading-relaxed">
-                    &quot;Recovery isn&apos;t about eliminating anxiety—it&apos;s about transforming your relationship with it. I&apos;ll show you how.&quot;
-                  </p>
-                </div>
-
-                {/* CTA Button */}
-                <Link
-                  href="/my-story"
-                  className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                >
-                  <span>Read My Full Story</span>
-                  <svg className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </Link>
-              </div>
+              {/* Description */}
+              <p className="text-gray-300 text-sm leading-relaxed">
+                {section.description}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

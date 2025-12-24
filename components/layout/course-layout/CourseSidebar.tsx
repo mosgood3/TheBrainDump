@@ -2,13 +2,16 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useAuth } from '../../../context/AuthContext';
 import { FreeLessonSection } from './FreeLessonSection';
 import { UnlockSection } from './UnlockSection';
 import { PaidLessonsSection } from './PaidLessonsSection';
 import { ClosingSection } from './ClosingSection';
+import { getCourseBySlug } from '../../courses/CourseIndex';
 
 interface CourseSidebarProps {
+  courseSlug: string;
   sidebarOpen: boolean;
   onCloseSidebar: () => void;
   currentLessonId: number | null;
@@ -16,10 +19,11 @@ interface CourseSidebarProps {
   expandedLessons: Set<number>;
   onToggleLessonExpanded: (lessonId: number) => void;
   onNavigation: (path: string) => void;
-  onOpenCheckout: () => void;
+  onOpenCheckout?: () => void;
 }
 
 export function CourseSidebar({
+  courseSlug,
   sidebarOpen,
   onCloseSidebar,
   currentLessonId,
@@ -29,38 +33,38 @@ export function CourseSidebar({
   onNavigation,
   onOpenCheckout
 }: CourseSidebarProps) {
-  const { isPaid, loading } = useAuth();
+  const { hasCourseAccess, loading } = useAuth();
+  const course = getCourseBySlug(courseSlug);
+  const hasAccess = hasCourseAccess(courseSlug);
 
   return (
-    <div className={`fixed inset-y-0 left-0 z-50 w-80 bg-white border-r border-gray-200 shadow-xl transform transition-transform duration-300 ease-in-out ${
+    <div className={`fixed top-[61px] bottom-0 left-0 z-50 w-80 bg-gradient-to-b from-gray-900 via-blue-950/90 to-gray-900 backdrop-blur-lg border-r border-white/30 shadow-xl transform transition-transform duration-300 ease-in-out ${
       sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-    } lg:translate-x-0 lg:static lg:inset-0`}>
+    } lg:top-0 lg:translate-x-0 lg:static lg:inset-0`}>
       <div className="flex flex-col h-full">
         {/* Sidebar Header */}
-        <div className="px-6 py-5 border-b border-gray-100">
+        <div className="px-6 py-5 border-b border-white/10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-16 h-16 rounded-xl overflow-hidden bg-gradient-to-br from-blue-500 to-orange-500 p-0.5 shadow-sm">
+              <div className="w-16 h-16 rounded-xl overflow-hidden shadow-lg shadow-blue-500/30">
                 <Image
-                  src="/images/Home/logo.png"
+                  src="https://xtubpexwrstuucwleaug.supabase.co/storage/v1/object/public/Images/logo.png"
                   alt="Logo"
                   width={64}
                   height={64}
-                  className="w-full h-full rounded-xl object-cover bg-white"
+                  className="w-full h-full rounded-xl object-cover"
                 />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-gray-900">
-                  <span className="text-blue-600">The</span>
-                  <span className="text-orange-500">Brain</span>
-                  <span className="text-blue-600">Dump</span>
+                <h2 className="text-lg font-bold text-white">
+                  {course?.title || 'Course'}
                 </h2>
-                <p className="text-xs text-gray-500 font-medium">Course Navigation</p>
+                <p className="text-xs text-gray-400 font-medium">Course Navigation</p>
               </div>
             </div>
             <button
               onClick={onCloseSidebar}
-              className="lg:hidden p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -69,10 +73,24 @@ export function CourseSidebar({
           </div>
         </div>
 
+        {/* Back to Courses Link */}
+        <div className="px-4 py-3 border-b border-white/10">
+          <Link
+            href="/courses"
+            className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Courses
+          </Link>
+        </div>
+
         {/* Navigation Sections */}
         <div className="flex-1 overflow-y-auto">
           {/* Free Lesson Section - Introduction */}
           <FreeLessonSection
+            courseSlug={courseSlug}
             currentLessonId={currentLessonId}
             currentSublessonId={currentSublessonId}
             expandedLessons={expandedLessons}
@@ -80,11 +98,12 @@ export function CourseSidebar({
             onNavigation={onNavigation}
           />
 
-          {/* Unlock Course Content Section - Only show for non-paid users after loading */}
-          {!loading && !isPaid && <UnlockSection onOpenCheckout={onOpenCheckout} />}
+          {/* Unlock Course Content Section - Only show for users without access after loading */}
+          {!loading && !hasAccess && <UnlockSection courseSlug={courseSlug} onOpenCheckout={onOpenCheckout} />}
 
           {/* Paid Lessons Section */}
           <PaidLessonsSection
+            courseSlug={courseSlug}
             currentLessonId={currentLessonId}
             currentSublessonId={currentSublessonId}
             expandedLessons={expandedLessons}
@@ -94,6 +113,7 @@ export function CourseSidebar({
 
           {/* Closing Section */}
           <ClosingSection
+            courseSlug={courseSlug}
             currentLessonId={currentLessonId}
             currentSublessonId={currentSublessonId}
             expandedLessons={expandedLessons}

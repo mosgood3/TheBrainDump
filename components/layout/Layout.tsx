@@ -58,7 +58,7 @@ export default function Layout({ children }: LayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900 flex flex-col">
       <Navbar
         onSignIn={handleSignIn}
         onLogout={handleLogout}
