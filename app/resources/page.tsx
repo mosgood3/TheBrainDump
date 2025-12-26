@@ -34,7 +34,7 @@ export default function ResourcesPage() {
       <Layout>
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <div className="h-12 w-12 border-4 rounded-full border-gray-300 border-t-purple-500 border-r-blue-500 animate-spin mx-auto mb-4"></div>
             <p className="text-gray-600">Loading books...</p>
           </div>
         </div>

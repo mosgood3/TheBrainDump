@@ -90,10 +90,10 @@ export interface LessonInfo {
 export const lessons: LessonInfo[] = [
   {
     id: 1,
-    title: 'Setup: Get Your Tools Ready',
+    title: 'Introduction',
     description: 'Learn about the tech stack and set up your development environment',
     estimatedDuration: 30,
-    category: 'Setup',
+    category: 'Introduction',
     difficulty: 'beginner',
     component: Chapter01,
     prerequisites: [],

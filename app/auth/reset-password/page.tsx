@@ -146,7 +146,7 @@ export default function ResetPasswordPage() {
             <p className="text-gray-600 mb-4">
               Your password has been successfully updated. You will be redirected to your dashboard shortly.
             </p>
-            <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <div className="w-6 h-6 border-2 rounded-full border-gray-300 border-t-purple-500 border-r-blue-500 animate-spin mx-auto"></div>
           </div>
         </div>
         </div>
@@ -283,7 +283,7 @@ export default function ResetPasswordPage() {
           >
             {loading ? (
               <div className="flex items-center justify-center gap-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-4 h-4 border-2 rounded-full border-white/30 border-t-white border-r-white/70 animate-spin"></div>
                 Updating Password...
               </div>
             ) : (

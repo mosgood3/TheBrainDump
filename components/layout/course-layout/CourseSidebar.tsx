@@ -40,36 +40,26 @@ export function CourseSidebar({
   return (
     <div className={`fixed top-[61px] bottom-0 left-0 z-50 w-80 bg-gradient-to-b from-gray-900 via-blue-950/90 to-gray-900 backdrop-blur-lg border-r border-white/30 shadow-xl transform transition-transform duration-300 ease-in-out ${
       sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-    } lg:top-0 lg:translate-x-0 lg:static lg:inset-0`}>
+    } lg:top-0 lg:translate-x-0`}>
       <div className="flex flex-col h-full">
         {/* Sidebar Header */}
         <div className="px-6 py-5 border-b border-white/10">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-16 h-16 rounded-xl overflow-hidden shadow-lg shadow-blue-500/30">
-                <Image
-                  src="https://xtubpexwrstuucwleaug.supabase.co/storage/v1/object/public/Images/logo.png"
-                  alt="Logo"
-                  width={64}
-                  height={64}
-                  className="w-full h-full rounded-xl object-cover"
-                />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-white">
-                  {course?.title || 'Course'}
-                </h2>
-                <p className="text-xs text-gray-400 font-medium">Course Navigation</p>
-              </div>
+          <div className="flex items-center gap-3">
+            <div className="w-16 h-16 rounded-xl overflow-hidden shadow-lg shadow-blue-500/30">
+              <Image
+                src="https://xtubpexwrstuucwleaug.supabase.co/storage/v1/object/public/Images/logo.png"
+                alt="Logo"
+                width={64}
+                height={64}
+                className="w-full h-full rounded-xl object-cover"
+              />
             </div>
-            <button
-              onClick={onCloseSidebar}
-              className="lg:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            <div>
+              <h2 className="text-lg font-bold text-white">
+                {course?.title || 'Course'}
+              </h2>
+              <p className="text-xs text-gray-400 font-medium">Course Navigation</p>
+            </div>
           </div>
         </div>
 

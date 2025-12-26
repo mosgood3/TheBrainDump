@@ -6,6 +6,7 @@ import { useAuth } from '../../../context/AuthContext';
 export function UserMenu() {
   const { user, signOut } = useAuth();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const getUserInitials = () => {
@@ -42,6 +43,7 @@ export function UserMenu() {
 
   const handleSignOutClick = async () => {
     setUserMenuOpen(false);
+    setIsSigningOut(true);
     const result = await signOut();
     if (result.error) {
       console.error('Sign out error:', result.error);
@@ -49,6 +51,17 @@ export function UserMenu() {
     // Always redirect to home page
     window.location.href = '/';
   };
+
+  if (isSigningOut) {
+    return (
+      <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-[100] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 rounded-full border-gray-700 border-t-blue-500 border-r-purple-500 animate-spin" />
+          <p className="text-white text-lg font-medium">Signing out...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative z-[70]" ref={userMenuRef}>

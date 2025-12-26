@@ -73,7 +73,7 @@ export default function SublessonPage({ params }: SublessonPageProps) {
   if (loading || isCheckingAccess) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-950 to-gray-900">
-        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 rounded-full border-gray-700 border-t-purple-500 border-r-blue-500 animate-spin"></div>
       </div>
     );
   }
@@ -164,32 +164,11 @@ export default function SublessonPage({ params }: SublessonPageProps) {
           <div className="flex-1 px-2 py-4 sm:p-6 relative z-10">
             <div className="max-w-4xl mx-auto">
 
-              {/* Lesson Context Header */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
-                  <span>{lesson.category}</span>
-                  <span>•</span>
-                  <span>{lesson.title}</span>
-                </div>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-2xl">{sublesson.icon}</span>
-                  <h1 className="text-3xl font-bold text-white">{sublesson.title}</h1>
-                </div>
-
-                {/* Progress Bar */}
+              {/* Lesson Header */}
+              <div className="mb-8 text-center">
+                <h1 className="text-3xl font-bold text-white">{sublesson.title}</h1>
                 {lesson.sublessons && lesson.sublessons.length > 1 && (
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between text-sm text-gray-400 mb-2">
-                      <span>Lesson Progress</span>
-                      <span>{getCurrentSublessonIndex() + 1} of {lesson.sublessons.length}</span>
-                    </div>
-                    <div className="w-full bg-white/10 rounded-full h-2">
-                      <div
-                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300 shadow-lg shadow-blue-500/50"
-                        style={{ width: `${((getCurrentSublessonIndex() + 1) / lesson.sublessons.length) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
+                  <p className="text-sm text-gray-400 mt-2">{getCurrentSublessonIndex() + 1} of {lesson.sublessons.length}</p>
                 )}
               </div>
 

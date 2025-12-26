@@ -6,9 +6,10 @@ import { UserMenu } from './UserMenu';
 
 interface CourseHeaderProps {
   onToggleSidebar: () => void;
+  sidebarOpen: boolean;
 }
 
-export function CourseHeader({ onToggleSidebar }: CourseHeaderProps) {
+export function CourseHeader({ onToggleSidebar, sidebarOpen }: CourseHeaderProps) {
   const pathname = usePathname();
 
   // Determine current section based on pathname
@@ -27,7 +28,7 @@ export function CourseHeader({ onToggleSidebar }: CourseHeaderProps) {
         // You might want to import lessons here or pass it as prop
         // For now, we'll use a simple mapping
         const lessonNames: { [key: number]: string } = {
-          1: 'Setup',
+          1: 'Introduction',
           2: 'Prompt Engineering',
           3: 'Frontend',
           4: 'Backend',
@@ -41,51 +42,44 @@ export function CourseHeader({ onToggleSidebar }: CourseHeaderProps) {
   };
 
   return (
-    <header className="bg-gradient-to-r from-gray-900 via-blue-950 to-gray-900 backdrop-blur-lg border-b border-white/30 shadow-xl sticky top-0 z-[60]">
+    <header className="bg-gradient-to-r from-gray-900 via-blue-950 to-gray-900 backdrop-blur-lg border-b border-white/30 shadow-xl fixed top-0 left-0 right-0 lg:sticky lg:left-auto lg:right-auto z-[60]">
       <div className="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between">
         <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle - Animated Hamburger/X */}
           <button
             onClick={onToggleSidebar}
-            className="lg:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10"
+            className="lg:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            aria-label="Toggle menu"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <div className="w-5 h-5 relative">
+              <span
+                className={`absolute left-0 w-full h-0.5 bg-current transform transition-all duration-200 ${
+                  sidebarOpen ? 'top-2 rotate-45' : 'top-0.5'
+                }`}
+              ></span>
+              <span
+                className={`absolute left-0 top-2 w-full h-0.5 bg-current transition-opacity duration-200 ${
+                  sidebarOpen ? 'opacity-0' : 'opacity-100'
+                }`}
+              ></span>
+              <span
+                className={`absolute left-0 w-full h-0.5 bg-current transform transition-all duration-200 ${
+                  sidebarOpen ? 'top-2 -rotate-45' : 'top-3.5'
+                }`}
+              ></span>
+            </div>
           </button>
 
           {/* Current Section Title */}
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="flex items-center min-w-0">
             {currentSection === 'assessment' && (
-              <>
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg shadow-orange-500/50">
-                  <span className="text-white text-xs sm:text-sm font-bold">📝</span>
-                </div>
-                <span className="text-sm sm:text-lg font-semibold text-orange-400 truncate">Skills Assessment</span>
-              </>
+              <span className="text-sm sm:text-lg font-medium text-white truncate">Skills Assessment</span>
             )}
             {currentSection === 'chapter' && (
-              <>
-                {(() => {
-                  const lessonIdMatch = pathname.match(/\/chapter\/(\d+)/);
-                  const lessonId = lessonIdMatch ? parseInt(lessonIdMatch[1]) : null;
-                  const isFreeLesson = lessonId === 1 || lessonId === 2;
-
-                  return (
-                    <>
-                      <div className={`w-7 h-7 sm:w-8 sm:h-8 ${isFreeLesson ? 'bg-gradient-to-br from-green-500 to-green-600 shadow-lg shadow-green-500/50' : 'bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg shadow-orange-500/50'} rounded-full flex items-center justify-center flex-shrink-0`}>
-                        <span className="text-white text-xs sm:text-sm font-bold">
-                          {lessonId || '?'}
-                        </span>
-                      </div>
-                      <span className={`text-sm sm:text-lg font-semibold ${isFreeLesson ? 'text-green-400' : 'text-orange-400'} truncate`}>{getCurrentLessonName()}</span>
-                    </>
-                  );
-                })()}
-              </>
+              <span className="text-sm sm:text-lg font-medium text-white truncate">{getCurrentLessonName()}</span>
             )}
             {currentSection === 'home' && (
-              <span className="text-sm sm:text-lg font-semibold text-white truncate">Dashboard</span>
+              <span className="text-sm sm:text-lg font-medium text-white truncate">Dashboard</span>
             )}
           </div>
         </div>

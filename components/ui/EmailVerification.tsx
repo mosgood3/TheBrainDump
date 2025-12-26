@@ -93,7 +93,7 @@ export default function EmailVerification() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-orange-50">
-        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 rounded-full border-gray-300 border-t-purple-500 border-r-blue-500 animate-spin"></div>
       </div>
     );
   }
@@ -167,8 +167,8 @@ export default function EmailVerification() {
             </div>
 
             {checkingVerification && (
-              <div className="flex items-center justify-center gap-2 text-blue-600 mb-4">
-                <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+              <div className="flex items-center justify-center gap-2 text-purple-600 mb-4">
+                <div className="w-4 h-4 border-2 rounded-full border-gray-300 border-t-purple-500 border-r-blue-500 animate-spin"></div>
                 <span className="text-sm">Checking verification status...</span>
               </div>
             )}

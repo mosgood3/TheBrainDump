@@ -39,6 +39,7 @@ export default function Navbar({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [showSignOutModal, setShowSignOutModal] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const pathname = usePathname();
 
   // If we're on any page other than homepage, anchor links should go back to main page
@@ -66,12 +67,24 @@ export default function Navbar({
 
   const handleSignOutConfirm = () => {
     setShowSignOutModal(false);
+    setIsSigningOut(true);
     onLogout?.();
   };
 
   const handleSignOutCancel = () => {
     setShowSignOutModal(false);
   };
+
+  if (isSigningOut) {
+    return (
+      <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-[100] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 rounded-full border-gray-700 border-t-blue-500 border-r-purple-500 animate-spin" />
+          <p className="text-white text-lg font-medium">Signing out...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <nav className="bg-gradient-to-r from-gray-900 via-blue-950 to-gray-900 backdrop-blur-lg border-b border-white/30 shadow-xl sticky top-0 z-50">

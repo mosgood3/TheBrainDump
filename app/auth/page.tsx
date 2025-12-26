@@ -34,7 +34,7 @@ export default function AuthPage() {
 
         {/* Spinner */}
         <div className="relative z-10 text-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-12 h-12 border-4 rounded-full border-gray-700 border-t-purple-500 border-r-blue-500 animate-spin mx-auto mb-4"></div>
           <p className="text-gray-300 text-sm">{user ? 'Redirecting...' : 'Loading...'}</p>
         </div>
       </div>

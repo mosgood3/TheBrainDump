@@ -152,7 +152,7 @@ export default function StripeCheckout({ isOpen, onClose, courseSlug = 'brain-du
           {/* Loading State */}
           {loading && !checkoutMounted && (
             <div className="flex flex-col items-center justify-center py-12">
-              <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+              <div className="w-12 h-12 border-4 rounded-full border-gray-700 border-t-purple-500 border-r-blue-500 animate-spin mb-4"></div>
               <p className="text-gray-300">Loading checkout...</p>
             </div>
           )}
